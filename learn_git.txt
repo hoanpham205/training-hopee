@@ -118,3 +118,35 @@ show log on just one line per commit
 
 use interactive adding
 			'git add -i'
+
+12./git cherry-pick:
+ - Là một cách để checkout 1 commit bất kỳ tại 1 branch được chỉ định về branch hiện tại. Hay chính là git cherry-pick sẽ bốc thay đổi của 1 commit trên 1 nhánh nào đó áp dụng vào nhánh hiện tại.
+
+ 			git cherry-pick [--edit] [-n] [-m parent-number] [-s] [-x] [--ff]
+		  	[-S[<keyid>]] <commit>…
+			git cherry-pick --continue
+			git cherry-pick --quit
+			git cherry-pick --abort
+
+ex:
+			git checkout master
+
+			git cherry-pick feature-A~1
+
+			# Hoặc chúng ta có thể chỉ định hash commit
+			git cherry-pick C2
+
+	@ đối với git merge, Git sẽ thực hiện áp dụng các thay đổi của commit mới nhất vào nhánh mình muốn merge.
+
+
+13./ merge vs rebase:
+	
+->	Ta sử dụng git rebase nếu như muốn các sự thay đổi thuộc về branch của mình luôn
+	 luôn là mới nhất. Và có thể log một cách có hệ thống dễ nhìn, dễ tracking sau này.
+
+->	Ta sử dụng git merge nếu muốn sắp xếp các commit theo mặc định. Nếu không biết về 
+	những gì mình làm trên branch đó thì dùng merge chắc chắn việc tracking sau này có
+	 thể tốn nhiều thời gian lần mò.(và mình muốn giữ lại lịch sử
+	 )
+	 
+
