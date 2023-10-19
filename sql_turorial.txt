@@ -1,0 +1,91 @@
+------------ SQL TUTORIAL-------------
+
+1. SQL Select
+	SELECT CustomerName, City FROM Customers;
+
+2. SQL SELECT DISTINCT
+	SELECT DISTINCT Country FROM Customers;
+3. SQL WHERE
+	SELECT * FROM Customers
+	WHERE Country='Mexico';
+4. SQL ORDER BY
+	SELECT * FROM Products
+	ORDER BY Price;
+
+5. SQL AND, OR , NOT 
+	WHERE Country = 'Spain' AND CustomerName LIKE 'G%';
+
+	WHERE Country = 'Germany' OR Country = 'Spain';
+
+	WHERE NOT Country = 'Spain';
+
+6. SQL INSERT INTO 
+	INSERT INTO table_name (column1, column2, column3, ...)
+	VALUES (value1, value2, value3, ...);
+
+7. SQL UPDATE
+	UPDATE table_name
+	SET column1 = value1, column2 = value2, ...
+	WHERE condition;
+
+8. SQL DELETE
+	DELETE FROM table_name WHERE condition;
+
+9. SQL SELECT TOP
+	SELECT TOP 3 * FROM Customers;
+
+10. SQL MIN & MAX
+	SELECT MIN(Price) - SELECT MAX(Price)
+
+11. SQL COUNT, SUM , AVG
+	SELECT COUNT(*)
+
+	SELECT SUM(Price)
+
+	SELECT AVG(Price)
+
+12. SQL LIKE
+	SELECT * FROM Customers
+	WHERE CustomerName LIKE 'a%';
+	
+13. SQL IN, BETWEEN
+	SELECT * FROM Customers
+	WHERE Country IN ('Germany', 'France', 'UK');
+
+	SELECT * FROM Products
+	WHERE Price BETWEEN 10 AND 20;
+
+14. SQL ALIASES
+	SELECT CustomerID AS ID
+
+15. SQL JOIN
+ - (INNER) JOIN: Returns records that have matching values in both tables
+
+ - LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+
+ - RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched 
+
+
+ records from the left table
+
+ - FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+16. SQL UNION
+	SELECT column_name(s) FROM table1
+	UNION (ALL)
+	SELECT column_name(s) FROM table2;
+
+17. SQL GROUP BY
+	SELECT column_name(s)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)
+	ORDER BY column_name(s);
+
+18. SQL HAVING
+	SELECT column_name(s)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)
+	HAVING condition
+	ORDER BY column_name(s);
