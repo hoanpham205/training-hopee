@@ -105,4 +105,58 @@
 	DATETIME
 	TIMESTAMP
 	BOOLEAN
-	BLOB (Binary Large Object)
+	BLOB (Binary Large Object
+
+16. Join table : 
+
+	- INNER JOIN
+		The SQL INNER JOIN command joins two tables based on a common column and selects rows with matching values in those columns.
+
+		ex: 
+			SELECT Customers.customer_id, Customers.first_name, Orders.amount
+			FROM Customers
+			INNER JOIN Orders
+			ON Customers.customer_id = Orders.customer;	
+
+	- LEFT JOIN
+		The SQL LEFT JOIN joins two tables based on a common column. It selects records that have matching values in these columns and the remaining rows from the left table.
+
+
+		ex:
+			SELECT Customers.customer_id, Customers.first_name, Orders.item
+			FROM Customers
+			LEFT JOIN Orders
+			ON Customers.customer_id = Orders.customer_id;
+
+	- RIGHT JOIN
+		The SQL RIGHT JOIN statement joins two tables based on a common column. It selects records that have matching values in these columns and the remaining rows from the right table.
+
+		ex:
+			SELECT Customers.customer_id, Customers.first_name, Orders.item
+			FROM Customers
+			RIGHT JOIN Orders
+			ON Customers.customer_id = Orders.customer_id;
+
+	- FULL JOIN
+		The SQL FULL OUTER JOIN statement joins two tables based on a common column. It selects records that have matching values in these columns and the remaining rows from both of the tables.
+
+		ex:
+			SELECT Customers.customer_id, Customers.first_name, Orders.item
+			FROM Customers
+			FULL OUTER JOIN Orders
+			ON Customers.customer_id = Orders.customer_id;
+
+17. SQL SUBQUERY
+	In SQL, it's possible to place a SQL query inside another query. This inner query is known as a subquery.
+
+	ex:
+		SELECT first_name
+		FROM Customers
+		WHERE customer_id= (
+			SELECT MAX(customer_id)
+			FROM CUSTOMERS
+		);
+
+
+
+
