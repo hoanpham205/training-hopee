@@ -1,0 +1,136 @@
+module Test::Unit::Assertions
+
+
+assert(test, [failure_msg])
+    
+    ex:
+      assert(false, "This was expected to be true")
+
+
+assert_block( failure_msg = nil )
+
+    ex:
+      assert_block do 
+        [1, 2, 3].any? { |num| num < 1 }
+      end
+
+
+assert_equal( expected, actual, failure_message = nil )
+    ex:
+      expected = 10
+      actual = some_function_that_returns_a_value()
+      assert_equal(expected, actual, "Giá trị không khớp với kết quả mong đợi")
+
+
+assert_no_match( regexp, string, failure_message = nil )
+    ex:
+      # File lib/test/unit/assertions.rb, line 281
+      def assert_no_match(regexp, string, msg=nil)
+        assert_instance_of(Regexp, regexp, "The first argument to assert_no_match should be a Regexp.")
+        self._assertions -= 1
+        msg = message(msg) { "<#{mu_pp(regexp)}> expected to not match\n<#{mu_pp(string)}>" }
+        assert(regexp !~ string, msg)
+      end
+
+
+assert_not_equal( expected, actual, failure_message = nil )
+    ex:
+      # File lib/test/unit/assertions.rb, line 270
+      def assert_not_equal(exp, act, msg=nil)
+        msg = message(msg) { "<#{mu_pp(exp)}> expected to be != to\n<#{mu_pp(act)}>" }
+        assert(exp != act, msg)
+      end
+
+
+assert_not_nil( expression, failure_message = nil )
+    ex:
+      # File lib/test/unit/assertions.rb, line 259
+      def assert_not_nil(exp, msg=nil)
+        msg = message(msg) { "<#{mu_pp(exp)}> expected to not be nil" }
+        assert(!exp.nil?, msg)
+      end
+
+
+assert_not_same( expected, actual, failure_message = nil )    
+    ex:
+        assert_not_same("x", "x") #Succeeds
+
+
+assert_not_send( +send_array+, failure_message = nil )    
+    ex:
+      assert_not_send([[1, 2], :member?, 1]) # -> fail
+      assert_not_send([[1, 2], :member?, 4]) # -> pass
+
+
+assert_nothing_raised( *args, &block )
+    ex:
+      assert_nothing_raised RuntimeError do
+        raise Exception #Assertion passes, Exception is not a RuntimeError
+      end
+
+      assert_nothing_raised do
+        raise Exception #Assertion fails
+      end
+
+
+
+assert_nothing_thrown( failure_message = nil, &block )   
+    ex:
+      assert_nothing_thrown "Something was thrown!" do
+        throw :problem?
+      end
+
+
+assert_raise( *args, &block )
+    ex:
+      assert_raise do #Fails, no Exceptions are raised
+      end
+
+      assert_raise NameError do
+        puts x  #Raises NameError, so assertion succeeds
+      end
+
+
+assert_raise_with_message(exception, expected, msg = nil, &block)
+    ex:
+      assert_raise_with_message(RuntimeError, "foo") do
+        nil #Fails, no Exceptions are raised
+      end
+
+      assert_raise_with_message(RuntimeError, "foo") do
+        raise ArgumentError, "foo" #Fails, different Exception is raised
+      end
+
+      assert_raise_with_message(RuntimeError, "foo") do
+        raise "bar" #Fails, RuntimeError is raised but the message differs
+      end
+
+      assert_raise_with_message(RuntimeError, "foo") do
+        raise "foo" #Raises RuntimeError with the message, so assertion succeeds
+      end
+
+
+assert_respond_to( object, method, failure_message = nil )
+    ex:
+      assert_respond_to("hello", :reverse)  #Succeeds
+      assert_respond_to("hello", :does_not_exist)  #Fails
+
+
+
+assert_send( +send_array+, failure_message = nil )
+    ex:
+      assert_send(["Hello world", :include?, "Hello"])    # -> pass
+      assert_send(["Hello world", :include?, "Goodbye"])  # -> fail
+    
+
+assert_throw( tag, failure_message = nil, &block )    
+    ex:
+      tag = Object.new
+      assert_throw(tag, "#{tag} was not thrown!") do
+        throw tag
+      end
+
+
+Link(https://docs.ruby-lang.org/en/2.1.0/Test/Unit/Assertions.html)
+
+

@@ -1,0 +1,591 @@
+ENUMERABLE
+
+all?[{|obj|block}] 	→	 true or false
+all?(pattern) 	→	 true or false
+	  ex:
+	  	%w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+	  	%w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+	  	[1, 2i, 3.14].all?(Numeric)                       #=> true
+
+
+
+any? [{ |obj| block }]	 →	 true or false
+any?(pattern)		 → 	true or false
+	  ex:
+	  	%w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+	  	%w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+	  	[].any?                                           #=> false
+
+
+
+chain(*enums) 	→	 enumerator
+	  ex:
+	    e = (1..3).chain([4, 5])
+	    e.to_a #=> [1, 2, 3, 4, 5]
+
+
+
+chuck{	|elt| ... } 	→	 an_enumerator
+	  ex:
+	  	[1,3,3,5,6,2,7]chuck {	|n| n.even?	}.each{	|even, any| p [even,any]		}
+
+
+
+chunk_while {	|elt_before, elt_after| bool } 	→ 	an_enumerator
+		ex:
+			a = [7, 5, 9, 2, 0, 7, 9, 4, 2, 0]
+			p a.chunk_while {|i, j| i.even? == j.even? }.to_a
+			#=> [[7, 5, 9], [2, 0], [7, 9], [4, 2, 0]]
+
+
+
+collect{	|obj|block	}		→	 array
+collect		 →		an_enumerator
+		Return a new array with the result
+
+		ex:
+			(1..4).map { |i| i*i }      #=> [1, 4, 9, 16]
+			(1..4).collect { "cat"  }   #=> ["cat", "cat", "cat", "cat"]
+
+
+
+
+collect_concat { |obj| block }	 → 	arrayclick to toggle source
+collect_concat	 →	 an_enumerator
+
+		ex:
+			[1, 2, 3, 4].flat_map { |e| [e, -e] } #=> [1, -1, 2, -2, 3, -3, 4, -4]
+			[[1, 2], [3, 4]].flat_map { |e| e + [100] } #=> [1, 2, 100, 3, 4, 100]
+
+
+
+count → int
+count(item) → int
+count { |obj| block } → int
+
+		ex:
+			ary = [1, 2, 4, 2]
+			ary.count               #=> 4
+			ary.count(2)            #=> 2
+			ary.count{ |x| x%2==0 } #=> 3
+
+
+
+cycle(n=nil) { |obj| block }	 →	 nil
+cycle(n=nil)	 →	 an_enumerator
+
+		ex:
+			a = ["a", "b", "c"]
+			a.cycle { |x| puts x }  # print, a, b, c, a, b, c,.. forever.
+			a.cycle(2) { |x| puts x }  # print, a, b, c, a, b, c.
+
+
+
+
+detect(ifnone = nil) { |obj| block } 	→ 	obj or nilclick to toggle source
+detect(ifnone = nil)	 → 	an_enumerator
+
+		ex:
+			(1..100).detect  #=> #<Enumerator: 1..100:detect>
+			(1..100).find    #=> #<Enumerator: 1..100:find>
+
+			(1..10).detect         { |i| i % 5 == 0 && i % 7 == 0 }   #=> nil
+			(1..10).find           { |i| i % 5 == 0 && i % 7 == 0 }   #=> nil
+			(1..10).detect(-> {0}) { |i| i % 5 == 0 && i % 7 == 0 }   #=> 0
+			(1..10).find(-> {0})   { |i| i % 5 == 0 && i % 7 == 0 }   #=> 0
+			(1..100).detect        { |i| i % 5 == 0 && i % 7 == 0 }   #=> 35
+			(1..100).find          { |i| i % 5 == 0 && i % 7 == 0 }   #=> 35
+
+
+
+drop(n) 	→ 	array
+		
+		ex:
+			a = [1, 2, 3, 4, 5, 0]
+			a.drop(3)             #=> [4, 5, 0]
+
+
+
+drop_while { |obj| block }	 → 	arrayclick to toggle source
+drop_while	 →	 an_enumerator
+
+		ex:
+			a = [1, 2, 3, 4, 5, 0]
+			a.drop_while { |i| i < 3 }   #=> [3, 4, 5, 0]
+
+
+
+
+each_cons(n) { ... } 	→	 nil
+each_cons(n) 	→	 an_enumerator
+
+		ex:
+			(1..5).each_cons(3) { |a| p a }
+			# outputs below
+			[1, 2, 3]
+			[2, 3, 4]
+			[3, 4, 5]
+
+
+
+each_entry { |obj| block } 	→ 	enum
+each_entry	 →	 an_enumerator
+
+		ex:
+			class Foo
+  			include Enumerable
+  			def each
+    			yield 1
+    			yield 1, 2
+    			yield
+  			end
+			end
+			Foo.new.each_entry{ |o| p o }
+			# Output
+			1
+			[1, 2]
+			nil
+
+
+
+each_slice(n) { ... } 	→	 nil
+each_slice(n)	 →	 an_enumerator
+
+		ex:
+			(1..10).each_slice(3) { |a| p a }
+			# outputs below
+			[1, 2, 3]
+			[4, 5, 6]
+			[7, 8, 9]
+			[10]
+
+
+
+
+each_with_index(*args) { |obj, i| block } 	→ 	enum
+each_with_index(*args) 	→ 	an_enumerator
+		
+		ex:
+			hash = Hash.new
+			%w(cat dog wombat).each_with_index { |item, index|
+			  hash[item] = index
+			}
+			hash   
+			#=> {"cat"=>0, "dog"=>1, "wombat"=>2}
+
+
+
+each_with_object(obj) { |(*args), memo_obj| ... } 	→ 	obj
+each_with_object(obj)	 →	 an_enumerator
+
+		ex:
+			evens = (1..10).each_with_object([]) { |i, a| a << i*2 }
+			#output: [2,4,...,18,20]
+
+
+
+find_all { |obj| block }	 → 	array
+find_all	 →	 an_enumerator
+
+		ex:
+			(1..10).find_all { |i|  i % 3 == 0 }   #=> [3, 6, 9]
+
+			[1,2,3,4,5].select { |num|  num.even?  }   #=> [2, 4]
+
+			[:foo, :bar].filter { |x| x == :foo }   #=> [:foo]
+
+
+
+find_index(value) 	→ 	int or nil
+find_index { |obj| block } 	→ 	int or nil
+find_index 	→ 	an_enumerator
+
+		ex:
+			(1..10).find_index  { |i| i % 5 == 0 && i % 7 == 0 }  #=> nil
+			(1..100).find_index { |i| i % 5 == 0 && i % 7 == 0 }  #=> 34
+			(1..100).find_index(50)                               #=> 49
+
+
+
+first 	→	 obj or nil
+first(n) 	→	 an_array
+
+		ex:
+			%w[foo bar baz].first     #=> "foo"
+			%w[foo bar baz].first(2)  #=> ["foo", "bar"]
+			%w[foo bar baz].first(10) #=> ["foo", "bar", "baz"]
+			[].first                  #=> nil
+			[].first(10)              #=> []
+
+
+
+flat_map { |obj| block } 	→	 array
+flat_map 	→ 	an_enumerator
+
+		ex:
+			[1, 2, 3, 4].flat_map { |e| [e, -e] } #=> [1, -1, 2, -2, 3, -3, 4, -4]
+			[[1, 2], [3, 4]].flat_map { |e| e + [100] } #=> [1, 2, 100, 3, 4, 100]
+
+
+
+grep(pattern) → array
+grep(pattern) { |obj| block } → array
+
+	ex:
+		(1..100).grep 38..44   #=> [38, 39, 40, 41, 42, 43, 44]
+		c = IO.constants
+		c.grep(/SEEK/)         #=> [:SEEK_SET, :SEEK_CUR, :SEEK_END]
+		res = c.grep(/SEEK/) { |v| IO.const_get(v) }
+		res                    #=> [0, 1, 2]
+
+
+
+grep_v(pattern) 	→ 	array
+grep_v(pattern) { |obj| block }	 → 	array
+
+		ex:
+			(1..10).grep_v 2..5   #=> [1, 6, 7, 8, 9, 10]
+			res =(1..10).grep_v(2..5) { |v| v * 2 }
+			res                    #=> [2, 12, 14, 16, 18, 20]
+
+
+
+group_by { |obj| block } 	→ 	a_hash
+group_by 	→ 	an_enumerator
+
+		ex:
+			(1..6).group_by { |i| i%3 }   #=> {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}
+
+
+
+include?(obj) → true or false
+
+		ex:
+			(1..10).include? 5  #=> true
+			(1..10).include? 15 #=> false
+			(1..10).member? 5   #=> true
+			(1..10).member? 15  #=> false
+
+
+
+inject(initial, sym) → obj
+inject(sym) → obj
+inject(initial) { |memo, obj| block } → obj
+inject { |memo, obj| block } → obj
+
+		ex:
+			# Sum some numbers
+			(1..4).reduce(:+)                             #=> 10
+			# Same using a block and inject
+			(1..6).inject { |sum, n| sum + n }            #=> 21
+			# Multiply some numbers
+			(1..4).reduce(1, :*)                          #=> 24desk
+
+			# Same using a block
+			(5..10).inject(1) { |product, n| product * n } #=> 151200
+			# find the longest word
+			longest = %w{ cat sheep bear }.inject do |memo, word|
+			   memo.length > word.length ? memo : word
+			end
+			longest                                        #=> "sheep"
+
+
+
+lazy	 →	 lazy_enumerator
+
+		ex:
+			def pythagorean_triples
+				 (1..Float::INFINITY).lazy.flat_map {|z|
+			    (1..z).flat_map {|x|
+			      (x..z).select {|y|
+			        x**2 + y**2 == z**2
+			      }.map {|y|
+			        [x, y, z]
+			      }
+			    }
+			  }
+			end
+			# show first ten pythagorean triples
+			p pythagorean_triples.take(10).force # take is lazy, so force is needed
+			p pythagorean_triples.first(10)      # first is eager
+			# show pythagorean triples less than 100
+			p pythagorean_triples.take_while { |*, z| z < 100 }.force
+
+
+
+map { |obj| block } 	→	 array
+map 	→	 an_enumerator
+	
+	ex:
+		(1..4).map{ |i| i*i  } 
+		(1..4).collect{ "cat" } #output: {"cat","cat","cat","cat"}
+
+
+
+max_by {|obj| block } 	→ 	obj
+max_by 	 →	  an_enumerator
+max_by(n) {|obj| block }  	→ 	obj
+max_by(n) 	→	  an_enumerator
+
+		ex:
+			a = %w(albatross dog horse)
+			a.max_by { |x| x.length }   #=> "albatross"
+
+			module Enumerable
+			 def wsample(n)
+			    self.max_by(n) {|v| rand ** (1.0/yield(v)) }
+			  end
+			end
+			e = (-20..20).to_a*10000
+			a = e.wsample(20000) {|x|
+			  Math.exp(-(x/5.0)**2) # normal distribution
+			}
+			# a is 20000 samples from e.
+			p a.length #=> 20000
+			h = a.group_by {|x| x }
+			-10.upto(10) {|x| puts "*" * (h[x].length/30.0).to_i if h[x] }
+
+
+
+min_by {|obj| block } 	→ 	obj
+min_by 	→ 	an_enumerator
+min_by(n) {|obj| block } 	→ 	array
+min_by(n) 	→ 	an_enumerator
+
+		ex:
+			a = %w(albatross dog horse)
+			a.min_by { |x| x.length }   #=> "dog"
+
+
+
+member?(obj) → true or false
+
+		ex: 
+			(1..10).include? 5  #=> true
+			(1..10).include? 15 #=> false
+			(1..10).member? 5   #=> true
+			(1..10).member? 15  #=> false
+
+
+
+min 	→ 	obj
+min { |a, b| block } 	→ 	obj
+min(n)	 → 	array
+min(n) { |a, b| block } 	→ 	array
+
+		ex: 
+			a = %w(albatross dog horse)
+			a.min                                   #=> "albatross"
+			a.min { |a, b| a.length <=> b.length }  #=> "dog"
+
+
+
+minmax 	→	 [min, max]
+minmax { |a, b| block }	 →	 [min, max]
+
+		ex:
+			a = %w(albatross dog horse)
+			a.minmax                                  #=> ["albatross", "horse"]
+			a.minmax { |a, b| a.length <=> b.length } #=> ["dog", "albatross"]
+
+
+
+minmax_by { |obj| block } → [min, max]
+minmax_by → an_enumerator
+
+		ex:
+			a = %w(albatross dog horse)
+			a.minmax_by { |x| x.length }   #=> ["dog", "albatross"]
+
+
+
+none? [{ |obj| block }] → true or false
+none?(pattern) → true or false
+
+		ex:
+			%w{ant bear cat}.none? { |word| word.length == 5 } #=> true
+			%w{ant bear cat}.none? { |word| word.length >= 4 } #=> false
+			%w{ant bear cat}.none?(/d/)                        #=> true
+			[1, 3.14, 42].none?(Float)                         #=> false
+			[].none?                                           #=> true
+			[nil].none?                                        #=> true
+			[nil, false].none?                                 #=> true
+			[nil, false, true].none?                           #=> false
+
+
+
+one? [{ |obj| block }] → true or false
+one?(pattern) → true or false
+
+		ex:
+			%w{ant bear cat}.one? { |word| word.length == 4 }  #=> true
+			%w{ant bear cat}.one? { |word| word.length > 4 }   #=> false
+			%w{ant bear cat}.one? { |word| word.length < 4 }   #=> false
+			%w{ant bear cat}.one?(/t/)                         #=> false
+			[ nil, true, 99 ].one?                             #=> false
+			[ nil, true, false ].one?                          #=> true
+			[ nil, true, 99 ].one?(Integer)                    #=> true
+			[].one?                                            #=> false
+
+
+
+reject { |obj| block } → array
+reject → an_enumerator
+
+		ex:
+			(1..10).reject { |i|  i % 3 == 0 }   #=> [1, 2, 4, 5, 7, 8, 10]
+
+			[1, 2, 3, 4, 5].reject { |num| num.even? } #=> [1, 3, 5]
+
+
+
+reverse_each(*args) { |item| block } → enum
+reverse_each(*args) → an_enumerator
+
+		ex:
+			(1..3).reverse_each { |v| p v }
+			#output : 3 2 1
+
+
+
+select { |obj| block } → array
+select → an_enumerator		
+
+		ex:
+			(1..10).find_all { |i|  i % 3 == 0 }   #=> [3, 6, 9]
+
+			[1,2,3,4,5].select { |num|  num.even?  }   #=> [2, 4]
+
+			[:foo, :bar].filter { |x| x == :foo }   #=> [:foo]	
+
+
+
+slice_after(pattern) → an_enumerator
+slice_after { |elt| bool } → an_enumerator
+
+		ex:
+			lines = ["foo\n", "bar\\\n", "baz\n", "\n", "qux\n"]
+			e = lines.slice_after(/(?<!\\)\n\z/)
+			p e.to_a
+			#=> [["foo\n"], ["bar\\\n", "baz\n"], ["\n"], ["qux\n"]]
+			p e.map {|ll| ll[0...-1].map {|l| l.sub(/\\\n\z/, "") }.join + ll.last }
+			#=>["foo\n", "barbaz\n", "\n", "qux\n"]
+			
+
+
+slice_before(pattern) → an_enumerator
+slice_before { |elt| bool } → an_enumerator
+
+		ex:
+			a = [0, 2, 3, 4, 6, 7, 9]
+			prev = a[0]
+			p a.slice_before { |e|
+			  prev, prev2 = e, prev
+			  prev2 + 1 != e
+			}.map { |es|
+			  es.length <= 2 ? es.join(",") : "#{es.first}-#{es.last}"
+			}.join(",")
+			#=> "0,2-4,6,7,9"
+
+
+
+slice_when {|elt_before, elt_after| bool } → an_enumerator
+
+		ex:
+			a = [1,2,4,9,10,11,12,15,16,19,20,21]
+			b = a.slice_when {|i, j| i+1 != j }
+			p b.to_a #=> [[1, 2], [4], [9, 10, 11, 12], [15, 16], [19, 20, 21]]
+			c = b.map {|a| a.length < 3 ? a : "#{a.first}-#{a.last}" }
+			p c #=> [[1, 2], [4], "9-12", [15, 16], "19-21"]
+			d = c.join(",")
+			p d #=> "1,2,4,9-12,15,16,19-21"
+
+
+
+sort → array
+sort { |a, b| block } → array
+
+		ex:
+			%w(rhea kea flea).sort           #=> ["flea", "kea", "rhea"]
+			(1..10).sort { |a, b| b <=> a }  #=> [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+
+
+
+sort_by { |obj| block } → array
+sort_by → an_enumerator
+
+		ex:
+			%w{apple pear fig}.sort_by { |word| word.length }
+              #=> ["fig", "pear", "apple"]
+
+
+
+sum(init=0) → number
+sum(init=0) {|e| expr } → number
+
+		ex:
+			{ 1 => 10, 2 => 20 }.sum {|k, v| k * v }  #=> 50
+			(1..10).sum                               #=> 55
+			(1..10).sum {|v| v * 2 }                  #=> 110
+			('a'..'z').sum                            #=> TypeError
+
+
+
+take(n) → array
+
+		ex:
+			a = [1, 2, 3, 4, 5, 0]
+			a.take(3)             #=> [1, 2, 3]
+			a.take(30)            #=> [1, 2, 3, 4, 5, 0]
+
+
+
+take_while { |obj| block } → array
+take_while → an_enumerator
+
+		ex:
+			a = [1, 2, 3, 4, 5, 0]
+			a.take_while { |i| i < 3 }   #=> [1, 2]
+
+
+
+tally → a_hash
+
+		ex:
+			["a", "b", "c", "b"].tally  #=> {"a"=>1, "b"=>2, "c"=>1}
+
+
+
+to_a(*args) → array
+
+		ex:
+			(1..7).to_a                       #=> [1, 2, 3, 4, 5, 6, 7]
+			{ 'a'=>1, 'b'=>2, 'c'=>3 }.to_a   #=> [["a", 1], ["b", 2], ["c", 3]]
+
+			require 'prime'
+			Prime.entries 10                  #=> [2, 3, 5, 7]
+
+
+
+uniq → new_ary
+uniq { |item| ... } → new_ary
+
+		- Returns a new array by removing duplicate values in self.
+
+
+
+zip(arg, ...) → an_array_of_array
+zip(arg, ...) { |arr| block } → nil
+
+		ex:
+			a = [ 4, 5, 6 ]
+			b = [ 7, 8, 9 ]
+
+			a.zip(b)                 #=> [[4, 7], [5, 8], [6, 9]]
+			[1, 2, 3].zip(a, b)      #=> [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+			[1, 2].zip(a, b)         #=> [[1, 4, 7], [2, 5, 8]]
+			a.zip([1, 2], [8])       #=> [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
+
+			c = []
+			a.zip(b) { |x, y| c << x + y }  #=> nil
+			c                               #=> [11, 13, 15]
