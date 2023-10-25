@@ -1,0 +1,48 @@
+1. Symbol:
+
+	Symbols là bất biến (immutable). Một symbol được tạo ra chỉ một lần và không thể thay đổi nội dung sau đó.
+	Các symbol được lưu trữ trong bộ nhớ một lần duy nhất, do đó chúng hiệu quả về mặt bộ nhớ và tốc độ so với chuỗi.
+	Thường được sử dụng cho các trường hợp mà bạn muốn đại diện cho một "nhãn" hoặc "khóa", ví dụ: tên của các thuộc tính, phương thức hoặc các khóa trong hash.
+2. String:
+
+	Strings là biến (mutable). Bạn có thể thay đổi nội dung của chuỗi sau khi tạo ra nó.
+	Các chuỗi được lưu trữ trong bộ nhớ và có thể tạo nhiều bản sao của cùng một chuỗi, dẫn đến sử dụng bộ nhớ lớn hơn và hiệu suất thấp hơn so với symbols.
+	Thường được sử dụng cho văn bản thay đổi và xuất ra cho người dùng cuối.
+
+
+	ex:
+		# Sử dụng Symbols
+		status = :success
+		if status == :success
+		  puts "Hoàn thành!"
+		end
+
+		# Sử dụng Strings
+		message = "Xin chào, thế giới!"
+		puts message
+
+		# Khi sử dụng Symbols cho các khóa trong hash
+		person = {
+		  name: "Alice",
+		  age: 30
+		}
+
+		# Khi sử dụng Strings cho văn bản có thể thay đổi
+		greeting = "Xin chào, #{person[:name]}!"
+
+
+
+3. Chuỗi nội suy Ruby
+	Nội suy hay hợp nhất các biến thành chuỗi là một kỹ thuật mạnh mẽ. Nó cho phép dựng mẫu chuỗi.
+
+		Ví dụ:
+
+		age = 30
+		name = "Anh"
+
+		"Xin chào, tên tôi là #{name}, năm nay tôi #{age} tuổi."
+
+		Chúng ta có đưa vào bất kỳ name và age bằng đặt chúng là biến trước chuỗi.
+
+		Đặc điểm
+		Ruby sẽ xử lý cho việc biến đổi các gía trị đó thành chuỗi. Do vậy chúng ta không cần gọi to_s nữa. 
