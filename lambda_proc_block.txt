@@ -1,0 +1,43 @@
+Trong Ruby, `lambda`, `proc`, và `block` đều liên quan đến việc tạo các khối mã thực thi hoặc các hàm vô danh (anonymous functions), nhưng chúng có những điểm khác nhau quan trọng. Hãy làm rõ mỗi khái niệm:
+
+1. **Block**:
+   - Block là một mảnh mã Ruby mà bạn có thể truyền vào một hàm hoặc phương thức.
+   Block không thể tồn tại một cách độc lập mà phải kèm theo một phương thức gọi
+   nó. Block thường được định nghĩa bằng cặp dấu `{}` hoặc `do...end`.
+
+   Ví dụ sử dụng block:
+
+   ```ruby
+   [1, 2, 3].each do |x|
+     puts x * 2
+   end
+   ```
+
+2. **Lambda**:
+   - Lambda là một đối tượng hàm vô danh, tạo bằng từ khóa `lambda` hoặc `->`.
+    Lambda giống như một hàm và có thể gán cho một biến. Nó thường được sử dụng
+     trong các tình huống cần truyền hàm như tham số. Lambda có cú pháp và cách
+      hoạt động giống hàm thông thường.
+
+   Ví dụ sử dụng lambda:
+
+   ```ruby
+   add = lambda { |a, b| a + b }
+   puts add.call(2, 3) # Kết quả: 5
+   ```
+
+3. **Proc**:
+   - Proc cũng là một đối tượng hàm vô danh, tạo bằng từ khóa `proc`. Proc tương tự lambda nhưng có một số khác biệt trong cách xử lý cú pháp và thuộc tính về ngữ cảnh.
+
+   Ví dụ sử dụng proc:
+
+   ```ruby
+   my_proc = proc { |x| puts x * 2 }
+   [1, 2, 3].each(&my_proc)
+   ```
+
+**Tóm tắt**:
+- Block là một mảnh mã được truyền vào một hàm hoặc phương thức.
+- Lambda và Proc đều là đối tượng hàm vô danh, tạo bằng `lambda` hoặc `proc`.
+- Lambda và Proc có cú pháp giống nhau, nhưng có những khác biệt trong cách xử lý ngữ cảnh và trả về giá trị.
+- Lambda và Proc thường được sử dụng trong việc truyền hàm như tham số cho các hàm khác.
