@@ -3,7 +3,7 @@ def testDNA(dna)  # rubocop:disable Metrics/MethodLength
   return 'Wrong DNA' if dna.empty?
 
   dna.each_char do |char|
-    return 'Wrong DNA' unless 'ATCG'.include?(char)
+    return 'Wrong DNA' if 'ATCG'.include?(char)
   end
 
   result = ''
@@ -23,7 +23,7 @@ def testDNA(dna)  # rubocop:disable Metrics/MethodLength
   result
 end
 
-p testDNA('GTAT')
+p testDNA('BTAT')
 
 # Cach 2
 def DNA(text) # rubocop:disable Naming/MethodName
