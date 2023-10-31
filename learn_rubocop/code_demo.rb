@@ -1,9 +1,11 @@
-def even_or_odd(number)
-  number.even? ? "Even" : "Odd"
-end 
+# frozen_string_literal: true
 
-def add_binary(a,b) 
-  (a+b).to_s(2) 
+def even_or_odd(number)
+  number.even? ? 'Even' : 'Odd'
+end
+
+def add_binary(a, b)
+  (a + b).to_s(2)
 end
 
 def high_and_low(numbers)
@@ -14,107 +16,230 @@ end
 def distance_between_points(a, b)
   Math.sqrt((b.y - a.y)**2 + (b.x - a.x)**2)
 end
-  
+
 def descending_order(n)
   n.to_s.chars.sort.reverse.join.to_i
 end
 
 def compare *s
-  s.map{|s| s.to_s.upcase[/^[A-Z]*$|/].sum }.reduce &:==
+  s.map { |s| s.to_s.upcase[/^[A-Z]*$|/].sum }.reduce(&:==)
 end
 
-#đảo ngược 1 số đã sắp xếp 
+# đảo ngược 1 số đã sắp xếp
 def descending_order(n)
   n.to_s.chars.sort.reverse.join.to_i
 end
 
-#kiểm tra có phải là in hoa 
+# kiểm tra có phải là in hoa
 class String
   def is_upcase?
     self == upcase
   end
 end
 
-#
 def square_or_square_root(arr)
   arr.map do |n|
     sqrt = Math.sqrt(n)
-    sqrt % 1 == 0 ? sqrt : n**2
+    (sqrt % 1).zero? ? sqrt : n**2
   end
 end
 
-
 class Ghost
-  COLORS = %w(white yellow purple red)
+  COLORS = %w[white yellow purple red].freeze
   attr_accessor :color
-  
+
   def initialize
     @color = COLORS.sample
   end
 end
 
-def array_plus_array(arr1, arr2 )
-  (arr1 + arr2 ).sum 
+def array_plus_array(arr1, arr2)
+  (arr1 + arr2).sum
 end
-
 
 # Are they the "same"?
 def comp(array1, array2)
-  array1.nil? || array2.nil? ? false : array1.sort.map {|v| v ** 2} == array2.sort
+  array1.nil? || array2.nil? ? false : array1.sort.map { |v| v**2 } == array2.sort
 end
 
-#give me a diamond
+# give me a diamond
 
 def diamond(n)
   return if n.even? || n < 1
-  
-  triangle = (1..n).step(2).map { |i| " " * ((n-i)/2) + "*" * i + "\n" }
-  (triangle + triangle.reverse[1..-1]).join
+
+  triangle = (1..n).step(2).map { |i| "#{' ' * ((n - i) / 2)}#{'*' * i}\n" }
+  (triangle + triangle.reverse[1..]).join
 end
 
-#Twice linear
+# Twice linear
 
 def dbl_linear(n)
-  h = 1; cnt = 0; q2, q3 = [], []
-  while true do
-      if (cnt >= n) then
-          return h
-      end
-      q2.push(2 * h + 1)
-      q3.push(3 * h + 1)
-      h = [q2[0], q3[0]].min
-      if h == q2[0] then h = q2.shift() end
-      if h == q3[0] then h = q3.shift() end
-      cnt += 1
+  h = 1
+  cnt = 0
+  q2 = []
+  q3 = []
+  loop do
+    return h if cnt >= n
+
+    q2.push(2 * h + 1)
+    q3.push(3 * h + 1)
+    h = [q2[0], q3[0]].min
+    h = q2.shift if h == q2[0]
+    h = q3.shift if h == q3[0]
+    cnt += 1
   end
 end
 
-
-#The Millionth Fibonacci Kata
+# The Millionth Fibonacci Kata
 
 def calc(num)
-  if num == 0
-    return [0, 1]
+  if num.zero?
+    [0, 1]
   elsif num == 1
-    return [1, 1]
+    [1, 1]
   else
     a, b = calc(num / 2)
     p = a * (2 * b - a)
     q = b * b + a * a
-    return num % 2 == 0 ? [p, q] : [q, p + q]
+    num.even? ? [p, q] : [q, p + q]
   end
 end
 
 def fib(num)
-  if num >= 0
-    return calc(num)[0]
-  else
-    return num % 2 == 0 ? -calc(-num)[0] : calc(-num)[0]
-  end
+  return calc(num)[0] if num >= 0
+
+  num.even? ? -calc(-num)[0] : calc(-num)[0]
 end
 
 require 'matrix'
 
 def fib(n)
-  (Matrix[[1,1],[1,0]] ** n)[1,0]
+  (Matrix[[1, 1], [1, 0]]**n)[1, 0]
+end
+
+# leap year
+def is_leap_year(year)
+  return true if (year % 400).zero?
+
+  (year % 4).zero? && year % 100 != 0
+end
+
+def is_leap_year(year)
+  DateTime.leap? year
+end
+
+def most_frequent_item_count(collection)
+  return 0 if collection == []
+
+  collection.uniq.map { |n| collection.count(n) }.max
+end
+
+# Disemvowel Trolls
+def most_frequent_item_count(collection)
+  collection.uniq.map { |v| collection.count v }.max || 0
+end
+
+def disemvowel(str)
+  str.delete('aeiouAEIOU')
+end
+
+def disemvowel(str)
+  'ueoaiUEOAI'.each_char do |abc|
+    str = str.gsub(abc, '')
+  end
+  str
+end
+p disemvowel('This website is for losers LOL!')
+
+class String
+  def toJadenCase
+    str.split.map(&:capitalize).join(' ')
+  end
+end
+
+# Counting duplicate
+def duplicate_count(text)
+  text.downcase.chars.group_by { |char| char }.count { |_char, group| group.size > 1 }
+end
+
+# Happy year
+def next_happy_year(year)
+  next_year = year + 1
+  happy_year = false
+  until happy_year
+    next_year += 1
+    happy_year = next_year.to_s.chars.uniq.length == 4
+  end
+  next_year
+end
+
+p next_happy_year(1001)
+
+# Tower Builder
+def towerBuilder(n)
+  (1..n).map do |i|
+    space = ' ' * (n - i)
+    stars = '*' * (i * 2 - 1)
+    space + stars + space
+  end
+end
+
+# Highest Scoring Word
+
+def high(x)
+  word_list = x.split
+
+  get_score = ->(word) { word.chars.map { |c| c.ord - 96 }.sum }
+  score_list = word_list.map { |word| get_score.call(word) }
+
+  highest_index = 0
+  highest_score = 0
+  score_list.each_with_index do |score, i|
+    if score > highest_score
+      highest_index = i
+      highest_score = score
+    end
+  end
+  word_list[highest_index]
+end
+
+def high(x)
+  x.split.max_by { |word| word.sum(-96 * word.length) }
+end
+
+p high('man i need a taxi up to ubud')
+
+# Sort the odd
+def sort_array(source_array)
+  odd = source_array.select(&:odd?).sort
+  source_array.map { |x| x.odd? ? odd.shift : x }
+end
+
+
+#Playing with digits
+def dig_pow(n, p)
+  num = n.to_s
+  total = (0..num.length).sum { |i| num[i].to_i**(p + i) }
+  (total % n).zero? ? total / n : -1
+end
+
+p dig_pow(46288, 3)
+
+
+#Find the odd int
+def find_it(seq)
+  seq.each do |i|
+    return i if seq.count(i).odd?
+  end
+end
+p find_it([20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5])
+
+
+#Number-Star ladder
+def pattern(n)
+  output = []
+  (1..n).each do |i|
+    output.push("1#{'*' * (i - 1)}#{i}")
+  end
+  output.join('\n').sub('1', '')
 end
