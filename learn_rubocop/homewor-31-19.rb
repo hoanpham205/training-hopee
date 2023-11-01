@@ -1,5 +1,7 @@
-#cach 1
-def testDNA(dna)  # rubocop:disable Metrics/MethodLength
+# frozen_string_literal: true
+
+# cach 1
+def testDNA(dna)
   return 'Wrong DNA' if dna.empty?
 
   dna.each_char do |char|
@@ -26,7 +28,7 @@ end
 p testDNA('BTAT')
 
 # Cach 2
-def DNA(text) # rubocop:disable Naming/MethodName
+def DNA(text)
   return 'Wrong DNA' if text.empty? || text =~ /[^AGTC]/
 
   swap = { 'A' => 'T', 'T' => 'A', 'G' => 'C', 'C' => 'G' }

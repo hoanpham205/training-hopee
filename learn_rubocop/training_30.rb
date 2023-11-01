@@ -219,7 +219,7 @@
 
 # def find_nb(m)
 #   total_value = 0
-#   output = 1 
+#   output = 1
 #   while total_value < m
 #     total_value += output**3
 #     output += 1
@@ -236,13 +236,119 @@
 #   end
 # end
 # p find_it([20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5])
-def pattern(n)
-  output = []
-  (1..n).each do |i|
-    output.push("1#{'*' * (i - 1)}#{i}")
+# def pattern(n)
+#   output = []
+#   (1..n).each do |i|
+#     output.push("1#{'*' * (i - 1)}#{i}")
+#   end
+#   output.join('\n').sub('1', '')
+# end
+
+
+# # p pattern(3)
+
+# def solve(arr)
+#   result = []
+#   arr.each do |i|
+#     if !result.include?(i)
+#       result << i
+#     end
+#   end
+#   result
+# end
+
+# p solve([1,1,4,5,1,2,1])
+
+# def likes(names)
+#   if names.empty?
+#     'no one like this'
+#   elsif names.length == 1
+#     "#{names[0]} likes this"
+#   elsif names.length == 2
+#     "#{names[0]} and #{names[1]} like this"
+#   elsif names.length == 3
+#     "#{names[0]}, #{names[1]} and #{names[2]} like this"
+#   else
+#     "#{names[0]}, #{names[1]} and #{names.size - 2} others like this"
+#   end
+# end
+
+# p likes(['Max'])
+
+# def digital_root(n)
+#   while n > 9
+#     n =  n.to_s.chars.map(&:to_i).sum
+#   end
+#   n
+# end
+
+# p digital_root(942)
+
+# def create_phone_number(numbers)
+#   "(#{numbers[0..2].join}) #{numbers[3..5].join}-#{numbers[6..9].join}"
+# end
+
+# p create_phone_number([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) # => returns "(123) 456-7890"
+
+# def count_bits(n)
+#   # count = 0
+#   # while n > 0
+#   #   count += n & 1
+#   #   n >>= 1
+#   # end
+#   # count
+#   n.to_s(2).count('1')
+# end
+
+# p count_bits(1234)
+
+# def find_outlier(integers)
+#   odd, even = integers.partition(&:odd?) #
+#   odd.length == 1 ? odd[0] : even[0]
+# end
+
+# p find_outlier([2, 4, 0, 100, 4, 11, 2602, 36])
+# def order(words)
+#   # return '' if words.empty?
+
+#   # word = words.split
+#   # ordered_word = []
+
+#   # word.each do |i|
+#   #   ordered_word[i.match(/\d/)[0].to_i - 1] = i
+#   # end
+#   # ordered_word.join(' ')
+
+#   words.split.sort_by { |w| w[/\d/]}.join(' ')
+# # end
+# def find_even_index(arr)
+#   arr.each_index do |i|
+#     temp1 = arr[0...i].sum
+#     temp2 = arr[(i + 1)..].sum
+#     return i if temp1 == temp2
+#   end
+#   -1
+# end
+# p find_even_index([1,2,3,4,3,2,1])
+
+
+# def solution(str)
+#   result = []
+#   str.chars.each_slice(2) do |i|
+#     result << i.join
+#   end
+#   result
+# end
+
+# p solution('asqwe')
+
+def validBraces(braces)
+  (braces.length / 2).times do |i|
+    braces.sub!("{}","")
+    braces.sub!("()","")
+    braces.sub!("[]","")
   end
-  output.join('\n').sub('1', '')
+  braces.empty?
 end
 
-
-p pattern(3)
+p validBraces( "{}" )
