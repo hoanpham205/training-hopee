@@ -28,7 +28,7 @@ end
 
 p create_phone_number([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) # => returns "(123) 456-7890"
 
-#Tong so bit
+#bit counting
 def count_bits(n)
   # count = 0
   # while n > 0
@@ -41,8 +41,7 @@ end
 
 p count_bits(1234) #output : 5
 
-
-
+#Find The Parity Outlier
 def find_outlier(integers)
   odd, even = integers.partition(&:odd?) #
   odd.length == 1 ? odd[0] : even[0]
@@ -50,7 +49,7 @@ end
 
 p find_outlier([2, 4, 0, 100, 4, 11, 2602, 36]) #output : 11
 
-
+#Your order, please
 def order(words)
   # return '' if words.empty?
 
@@ -63,9 +62,9 @@ def order(words)
   # ordered_word.join(' ')
 
   words.split.sort_by { |w| w[/\d/]}.join(' ')
-
 end 
 
+#Equal Sides Of An Array
 def find_even_index(arr)
   arr.each_index do |i|
     temp1 = arr[0...i].sum
@@ -74,9 +73,10 @@ def find_even_index(arr)
   end
   -1
 end
+
 p find_even_index([1,2,3,4,3,2,1])
   
-
+#Split Strings
 def solution(str)
   result = []
   str.chars.each_slice(2) do |i|
