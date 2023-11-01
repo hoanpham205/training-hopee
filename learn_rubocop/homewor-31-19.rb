@@ -27,7 +27,7 @@ p testDNA('BTAT')
 
 # Cach 2
 def DNA(text) # rubocop:disable Naming/MethodName
-  return 'Wrong DNA' if text.empty? || text =! /[^AGTC]/
+  return 'Wrong DNA' if text.empty? || text =~ /[^AGTC]/
 
   swap = { 'A' => 'T', 'T' => 'A', 'G' => 'C', 'C' => 'G' }
 
