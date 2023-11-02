@@ -85,4 +85,4 @@ def solution(str)
   result
 end
 
-p solution('asqwe')
+p solution('asqwe') 
