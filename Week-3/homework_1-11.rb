@@ -3,11 +3,11 @@ def homework(n, m)
   results = []
 
   while results.length < n
-    numbers = (1..m).map { rand(1..100) }
+    p numbers = (1..m).map { rand(1..100) }
     operators = ['+', '-']
     exp = numbers.zip(operators.sample(m - 1)).flatten.join(' ')
     
-    result = eval(exp)
+    p result = eval(exp)
     
     if result.between?(1, 100) && !results.include?(exp)
       results << exp
@@ -27,12 +27,14 @@ class TestHomework < Test::Unit::TestCase
   include Test::Unit::Assertions
 
   def test_homework
-    result1 = homework(2, 2)
-    assert_equal(2, result1.size)
-    result2 = homework(2, 3)
-    assert_equal(2, result2.size)
-    result3 = homework(5, 2)
-    assert_equal(5, result3.size)
+    assert_equal(3, homework(3, 3).size)
+    assert_equal(0, homework(0, 2).size)
+    assert_equal(0, homework(0, 3).size)
+    assert_equal(1, homework(1, 2).size)
+    assert_equal(1, homework(1, 3).size)
+    assert_equal(2, homework(2, 2).size)
+    assert_equal(3, homework(3, 2).size)
+    assert_equal(3, homework(3, 3).size)
   end
 end
 
