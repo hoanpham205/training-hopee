@@ -3,11 +3,6 @@
 require 'faraday'
 
 class Api
-  API_URL = 'https://6418014ee038c43f38c45529.mockapi.io/api/v1/'
-
-  def initialize
-    @connection = Faraday.new(API_URL)
-  end
 
   def get_active_users
     response = @connection.get('users')
@@ -17,12 +12,12 @@ class Api
     users.select { |user| user['active'] == true }
   end
 
-  def create_user(name, sex, avatar)
+  def create_user(name, sex, avatar,active)
     user_data = {
       name:,
       sex:,
       avatar:,
-      active: false,
+      active: ,
       created_at: Time.now.to_s
     }
 
@@ -45,20 +40,11 @@ class Api
     end
   end
 
-  def get_active_users_sort_by_creation_date
-    response = @connection.get('users')
-    return [] unless response.status == 200
-
-    users = JSON.parse(response.body)
-    users.reject! { |user| user['created_at'].nil? }
-    users.sort_by { |user| user['created_at'] }
-  end
-
   def delete_oldest_user
-    sort_users = get_active_users_sort_by_creation_date
+    sort_users = get_users_filtered
 
     if sort_users.length.positive?
-      user_id = sort_users[-1]['id']
+      user_id = sort_users[0]['id']
       response = @connection.delete("users/#{user_id}")
       return response.status == 200
     end
@@ -80,6 +66,24 @@ class Api
       end
     end
   end
+
+  private
+
+  API_URL = 'https://6418014ee038c43f38c45529.mockapi.io/api/v1/'
+
+  def initialize
+    @connection = Faraday.new(API_URL)
+  end
+
+  def get_users_filtered(params)
+    response = @connection.get('users',params)
+    if response.status == 200
+      users = JSON.parse(response.body)
+      return users
+    else
+      return []
+    end
+  end
 end
 
 api_client = Api.new
@@ -88,7 +92,7 @@ api_client = Api.new
 # puts 'Active Users:'
 # puts active_users
 
-# new_user = api_client.create_user('Hoan Dep Trai', 'male', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN')
+new_user = api_client.create_user('Minh cung yeu Dat rat nhieu', 'bong xa bang', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN',true)
 # puts s = api_client.get_active_users_sort_by_creation_date
 
-api_client.delete_oldest_user
+ api_client.delete_user(39)
