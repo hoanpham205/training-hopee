@@ -2,7 +2,7 @@
 
 require 'faraday'
 
-class Api
+class Users
   def get_active_users
     response = @connection.get('users')
     return [] unless response.status == 200
