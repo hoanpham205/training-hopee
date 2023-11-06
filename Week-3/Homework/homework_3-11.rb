@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'faraday'
 
 class Api
-  API_URL = 'https://6418014ee038c43f38c45529.mockapi.io/api/v1/'.freeze
+  API_URL = 'https://6418014ee038c43f38c45529.mockapi.io/api/v1/'
 
   def initialize
     @connection = Faraday.new(API_URL)
@@ -9,33 +11,28 @@ class Api
 
   def get_active_users
     response = @connection.get('users')
-    if response.status == 200
-      users = JSON.parse(response.body)
-      active_users = users.select { |user| user['active'] == true }
-      return active_users
-    else
-      return []
-    end
+    return [] unless response.status == 200
+
+    users = JSON.parse(response.body)
+    users.select { |user| user['active'] == true }
   end
 
   def create_user(name, sex, avatar)
     user_data = {
-      name: name,
-      sex: sex,
-      avatar: avatar,
+      name:,
+      sex:,
+      avatar:,
       active: false,
-      created_at: Time.now.to_s 
+      created_at: Time.now.to_s
     }
 
     response = @connection.post('users') do |req|
       req.headers['Content-Type'] = 'application/json'
       req.body = user_data.to_json
     end
-    if response.status == 201
-      return JSON.parse(response.body)
-    else
-      return nil 
-    end
+    return JSON.parse(response.body) if response.status == 201
+
+    nil
   end
 
   def delete_user(user_id)
@@ -44,33 +41,29 @@ class Api
       p 'Deleted success!'
     else
       p 'Failed to delete!'
-      return response.status == 200
+      response.status == 200
     end
   end
 
- 
   def get_active_users_sort_by_creation_date
     response = @connection.get('users')
-    if response.status == 200
-      users = JSON.parse(response.body)
-      users.reject! { |user| user['created_at'].nil? }
-      sort_users = users.sort_by { |user| user['created_at']}
-      return sort_users 
-    else
-      return []
-    end
+    return [] unless response.status == 200
+
+    users = JSON.parse(response.body)
+    users.reject! { |user| user['created_at'].nil? }
+    users.sort_by { |user| user['created_at'] }
   end
 
   def delete_oldest_user
     sort_users = get_active_users_sort_by_creation_date
 
-    if sort_users.length > 0
-      user_id = sort_users[0]['id']
+    if sort_users.length.positive?
+      user_id = sort_users[-1]['id']
       response = @connection.delete("users/#{user_id}")
       return response.status == 200
     end
 
-    return false
+    false
   end
 
   def manage_user_list
@@ -95,7 +88,7 @@ api_client = Api.new
 # puts 'Active Users:'
 # puts active_users
 
-# new_user = api_client.create_user('Luffy', 'male', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN')
-puts s = api_client.get_active_users_sort_by_creation_date
+# new_user = api_client.create_user('Hoan Dep Trai', 'male', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN')
+# puts s = api_client.get_active_users_sort_by_creation_date
 
-# dele_user = api_client.delete_user(189)
+api_client.delete_oldest_user
