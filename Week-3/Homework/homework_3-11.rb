@@ -3,7 +3,6 @@
 require 'faraday'
 
 class Api
-
   def get_active_users
     response = @connection.get('users')
     return [] unless response.status == 200
@@ -12,12 +11,12 @@ class Api
     users.select { |user| user['active'] == true }
   end
 
-  def create_user(name, sex, avatar,active)
+  def create_user(name, sex, avatar, active)
     user_data = {
       name:,
       sex:,
       avatar:,
-      active: ,
+      active:,
       created_at: Time.now.to_s
     }
 
@@ -76,13 +75,10 @@ class Api
   end
 
   def get_users_filtered(params)
-    response = @connection.get('users',params)
-    if response.status == 200
-      users = JSON.parse(response.body)
-      return users
-    else
-      return []
-    end
+    response = @connection.get('users', params)
+    return [] unless response.status == 200
+
+    JSON.parse(response.body)
   end
 end
 
@@ -92,7 +88,8 @@ api_client = Api.new
 # puts 'Active Users:'
 # puts active_users
 
-new_user = api_client.create_user('Minh cung yeu Dat rat nhieu', 'bong xa bang', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN',true)
+api_client.create_user('Minh cung yeu Dat rat nhieu', 'bong xa bang',
+                       'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN', true)
 # puts s = api_client.get_active_users_sort_by_creation_date
 
- api_client.delete_user(39)
+api_client.delete_user(39)
