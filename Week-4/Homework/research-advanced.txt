@@ -1,0 +1,64 @@
+-- Class Method vs Instance Method--
+
+
+- Class Method là các phương thức dành cho toàn bộ lớp, không cần đối tượng cụ thể.
+
+class MathUtil
+  def self.square(x)
+    x * x
+  end
+end
+
+result = MathUtil.square(5)
+
+
+- Instance Method là các phương thức dành cho từng đối tượng riêng lẻ trong một lớp.
+
+class Person
+  def say_hello
+    puts "Hello, I am a person."
+  end
+end
+
+person = Person.new
+person.say_hello
+
+
+Tóm lại, instance methods và class methods đều là phương thức trong Ruby, nhưng chúng được sử dụng trong ngữ cảnh khác nhau. Instance methods hoạt động trên các đối tượng cụ thể, trong khi class methods hoạt động trên toàn bộ lớp.
+
+
+-- Class Variable vs Instance Variable--
+
+Biến Class (Class Variable) là biến chia sẻ trên toàn bộ lớp và các đối tượng của lớp, được khai báo bằng @@.
+
+Biến Instance (Instance Variable) là biến riêng của từng đối tượng, không chia sẻ giữa các đối tượng, được khai báo bằng @.
+
+
+-- Toán Tử ' ||= ' --
+
+- Trong Ruby, ||= là một toán tử gán tổng hợp được sử dụng để gán một giá trị cho một biến nếu biến đó chưa có giá trị hoặc giá trị của biến là nil (rỗng hoặc không xác định).
+
+	# Khởi tạo biến a với giá trị nil
+	a = nil
+
+	# Sử dụng ||= để gán giá trị 5 cho a nếu a là nil
+	a ||= 5
+
+	puts a # Kết quả: 5
+
+	# Biến b đã có giá trị 10, nên giá trị của b không bị thay đổi
+	b = 10
+	b ||= 7
+
+	puts b # Kết quả: 10
+
+-- Private vs Protected --
+private dùng cho các phương thức chỉ có thể gọi bên trong lớp.
+
+protected dùng cho các phương thức có thể gọi từ bên trong lớp và từ các lớp con (subclass).
+
+
+
+
+
+
