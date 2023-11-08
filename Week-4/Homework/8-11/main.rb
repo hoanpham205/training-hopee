@@ -1,6 +1,8 @@
-require './user_service' 
-require './doc_exporter.rb'
-require './importer.rb'
+# frozen_string_literal: true
+
+require './user_service'
+require './doc_exporter'
+require './importer'
 
 user_data = UserService.active_users
 

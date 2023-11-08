@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # user_service.rb
 require 'faraday'
 require 'json'
@@ -14,12 +16,10 @@ class UserService
     end
   end
 
-  def self.delete_user (user_id)
+  def self.delete_user(_user_id)
     response = connection.delete("users/#{Id}")
     response.success?
   end
-  
-  private
 
   def self.connection
     @connection ||= Faraday.new(url: API_URL)

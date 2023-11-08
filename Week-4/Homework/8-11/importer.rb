@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'json'
 require 'csv'
 
-class Importer 
+class Importer
   API_URL = 'https://6418014ee038c43f38c45529.mockapi.io/api/v1/users'
 
   def initialize(csv_path)
@@ -18,12 +20,12 @@ class Importer
       }
       post_data(data_list)
     end
-  end 
+  end
 
-  private 
+  private
 
   def post_data(data_list)
-    response  = @connection.post do |req|
+    response = @connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.body = data_list.to_json
     end
@@ -33,9 +35,8 @@ class Importer
       p 'Error'
     end
   end
-  
+
   def connection
     @connection ||= Faraday.new(url: API_URL)
   end
 end
-
