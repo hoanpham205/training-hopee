@@ -14,6 +14,11 @@ class UserService
     end
   end
 
+  def self.delete_user (user_id)
+    response = connection.delete("users/#{Id}")
+    response.success?
+  end
+  
   private
 
   def self.connection
