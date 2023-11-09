@@ -11,12 +11,14 @@ class Importer
     @csv_path = csv_path
   end
 
-  def exec
+  def self.exec
     CSV.foreach(@csv_path, headers: true) do |row|
       data_list = {
         'Name' => row['name'],
-        'Avatar' => row[' avatar'],
-        'Sex' => row[' sex']
+        'Avatar' => row['avatar'],
+        'Sex' => row[' sex'],
+        'Active' => row['active'],
+        'Created_at' => row['created_at']
       }
       post_data(data_list)
     end
@@ -24,7 +26,7 @@ class Importer
 
   private
 
-  def post_data(data_list)
+  def self.post_data(data_list)
     response = @connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.body = data_list.to_json
@@ -36,7 +38,7 @@ class Importer
     end
   end
 
-  def connection
+  def self.connection
     @connection ||= Faraday.new(url: API_URL)
   end
 end

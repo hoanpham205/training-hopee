@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Active Users</title>
+</head>
+<body>
+  <h1>Active Users</h1>
+  <%= pie_chart data_list.group(:flavor).count  />
+  </body>
+</html>

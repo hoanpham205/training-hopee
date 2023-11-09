@@ -15,11 +15,14 @@ class BuilChart
 
   def generate_gender_chart(data_list)
     gender_counts = data_list.group_by { |user| user['Sex'] }.transform_values(&:count)
-    g = Gruff::Pie.new
+    g = Gruff::Candlestick.new
     g.title = 'Biểu đồ Giới Tính'
-    gender_counts.each { |gender, count| g.data(gender, count) }
-    g.labels = { 'male' => 'Nam', 'female' => 'Nữ' } 
-
+    # gender_counts.each { |gender, count| g.data(gender, count) }
+    # g.data = { 'male' => 'Nam', 'female' => 'Nữ' } 
+    g.data low:  79.30, high:  93.10, open:  79.44, close:  91.20
+    g.data low:  89.14, high: 106.42, open:  91.28, close: 106.26
+    g.data low: 107.89, high: 131.00, open: 108.20, close: 129.04
+    g.data low: 103.10, high: 137.98, open: 132.76, close: 115.81
     chart_image = '/home/hoan/workspace/training-hopee/Week-4/Test-Chart/chart.png'
     g.write(chart_image)
 

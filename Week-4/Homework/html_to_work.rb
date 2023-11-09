@@ -3,7 +3,7 @@
 require 'faraday'
 require 'htmltoword'
 require 'json'
-
+require 'chartkick'
 
 class Users
   def get_active_users
@@ -11,24 +11,6 @@ class Users
     return [] unless response.status == 200
 
     users = JSON.parse(response.body)
-  end
-
-  def create_user(name, sex, avatar, active)
-    user_data = {
-      name:,
-      sex:,
-      avatar:,
-      active:,
-      created_at: Time.now.to_s
-    }
-
-    response = @connection.post('users') do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = user_data.to_json
-    end
-    return JSON.parse(response.body) if response.status == 201
-
-    nil
   end
 
   def delete_user(user_id)
@@ -53,21 +35,6 @@ class Users
     false
   end
 
-  def manage_user_list
-    max_list = 100
-    current_user = get_active_users.count
-
-    while current_user > max_list
-      if delete_oldest_user
-        current_user -= 1
-        p 'Deleted one user.'
-      else
-        p 'No more user to delete '
-        break
-      end
-    end
-  end
-
   def self.generate_table_doc(data_list)
 
     my_html = '<html><head>'
@@ -76,16 +43,17 @@ class Users
 
     my_html += "<h1>Danh sach nguoi dung</h1>"
 
-    my_html += '<table border="1"><tr><th>Id</th><th>Active</th><th>Sex</th><th>Avatar</th><th>Name</th><th>Created At</th></tr>'
+    my_html += '<table border="1"><tr><th>Id</th><th>Active</th><th>Sex</th><th>Avatar</th>
+    <th>Name</th><th>Created At</th></tr>'
 
-    sort_list = data_list.map { |i| i.reverse_each.to_h }
+    sort_list = data_list.map { |i| i.to_h }
     sort_list.each do |item|
       my_html += '<tr>'
       item.each do |key, value|
         if value.nil?
-          my_html += '<td></td>'
+          my_html += '<td style: {background: "#1322"}></td>'
         else
-          my_html += "<td>#{value}</td>"
+          my_html += (value.nil? ? '<td></td>' : "<td>#{value}</td>")
         end
       end
       my_html += '</tr>'
@@ -116,12 +84,6 @@ end
 api_client = Users.new
 
 active_users = api_client.get_active_users
-# puts 'Active Users:'
-# puts active_users
-
-# api_client.create_user('Minh cung yeu Dat rat nhieu', 'bong xa bang',
-                       # 'https://www.google.com/url?sa=i&url=https%3A%2F%2Finkythuatso.com%2Fhinh-anh-dep%2Fanh-luffy-4k-3619.html&psig=AOvVaw3Of9g9a2XiK2hIxLX13yne&ust=1699260467094000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJC5hda8rIIDFQAAAAAdAAAAABAN', true)
-# puts s = api_client.get_active_users_sort_by_creation_date
 
 data_list = active_users.map do |user|
   {
@@ -133,5 +95,5 @@ data_list = active_users.map do |user|
     'Created At' => user['created_at']
   }
 end
+Users.generate_gender_chart(data_list)
 
-Users.generate_table_doc(data_list)

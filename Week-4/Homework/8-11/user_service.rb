@@ -20,6 +20,17 @@ class UserService
     response = connection.delete("users/#{Id}")
     response.success?
   end
+  def self.create_user(user_data)
+    response = connection.post('users') do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = user_data.to_json
+    end
+    if response.status == 201
+      JSON.parse(response.body)
+    else
+      nil
+    end
+  end
 
   def self.connection
     @connection ||= Faraday.new(url: API_URL)
