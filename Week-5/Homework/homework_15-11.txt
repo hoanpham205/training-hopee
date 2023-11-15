@@ -1,0 +1,93 @@
+Single-Table Inheritance (STI):
+- Nhiều lớp con sẽ kế thừa từ một lớp cha với tất cả dữ liệu trong cùng một bảng trong cơ sở dữ liệu. Lớp cha có một cột là "type" để xác định lớp con nào thuộc về một đối tượng.
+
+- Nên sử dụng STI là khi các mô hình của bạn có dữ liệu hoặc trạng thái (data/state) được chia sẻ. Và hành vi chia sẻ là tùy chọn. Hãy giả sử chúng ta cần tạo ra một ứng dụng liệt kê các loại xe khác nhau được bán tại một đại lý. Sản phẩm chúng ta có là ôtô, xe máy và xe đạp. Đối với mỗi chiếc xe, đại lý muốn theo dõi giá, màu sắc và liệu những chiếc xe đó có được mua hay không. Với ví dụ này việc áp dụng STI là một lựa chọn đúng đắn, bởi mỗi loại xe đại lý đều quan tâm đến các tính chất như giá, màu sắc và đã bán hay chưa. Chúng ta có thể dùng cùng một dữ liệu cho mỗi đối tượng. Chúng ta sẽ có lớp cha là Vehicle với các thuộc tính color, price, purchased. Mỗi lớp con (ôtô, xe máy và xe đạp) có thể kế thừa từ Vehicle và tất cả đều có thể nhận được các thuộc tính giống nhau. Migration để tạo bảng Vehicle có thể sẽ trông như sau:
+
+						class CreateVehicles < ActiveRecord::Migration[5.1]
+						  def change                           
+						    create_table :vehicles do |t|                             
+						      t.string :type, null: false                         
+						      t.string :color                             
+						      t.integer :price                            
+						      t.boolean :purchased, default: false                                                      
+						    end                         
+						  end                       
+						end
+
+						class Vehicle < ApplicationRecord
+
+						class Bicycle < Vehicle
+
+						class Motorcycle < Vehicle
+
+						class Car < Vehicle
+
+						mustang = Car.new(price: 50000, color: red)harley =
+						 Motorcycle.new(price: 30000, color: black)
+
+						mustang.price=> 50000
+
+						harley.price=> 30000
+
+
+Polymorphic Associations:
+- Với các liên kết đa hình (Polymorphic Associations), một mô hình có thể 
+thuộc về (belongs_to) một số mô hình bằng một liên kết (association) duy nhất. 
+Khi một số mô hình không có mối quan hệ hoặc chia sẻ dữ liệu với nhau,
+nhưng có một mối quan hệ với lớp đa hình. Ví dụ, hãy nghĩ về một trang mạng
+xã hội như Facebook. Trên Facebook, cả cá nhân và nhóm đều có thể chia sẻ 
+bài viết. Các các nhân và các nhóm không liên quan đến nhau và kiểu dữ 
+khác nhau. Một nhóm có thể có các trường member_count và group_type không áp
+dụng cho một các nhân được. Trường hợp không sử dụng liên kết đa hình.
+
+						class Post  belongs_to :person  belongs to :groupend
+
+						class Person  has_many :postsend
+
+						class Group  has_many :postsend
+
+- để tìm ra ai sở hữu một hồ sơ nhất định, chúng ta nhìn vào cột đó là 
+foreign_key. Foreign_key là một id được sử dụng để tìm đối tượng liên quan 
+trong bảng của mô hình liên quan. Tuy nhiên bảng Post sẽ có hai khóa ngoài: 
+group_id và person_id. Điều này sẽ có vấn đề. Khi cố gắng tìm chủ sở hữu của 
+một bài đăng, chúng ta sẽ phải kiểm tra cả hai cột để tìm chính xác khóa ngoại, 
+thay vì dựa vào một. Điều gì xảy ra nếu chúng ta gặp phải trường hợp cả hai cột 
+đều có giá trị? Liên kết đa hình sẽ giải quyết vấn đề này bằng cách gộp chức 
+năng này thành một liên kết. Chúng ta có thể đại diện cho các lớp của mình như 
+thế này:
+
+						class Post
+						  belongs_to :postable, polymorphic: true
+						end
+						class Person
+						  has_many :posts, as :postable
+						end
+						class Group
+						  has_many :posts, as :postable
+						end
+
+
+Summary:
+
+Single-Table Inheritance và Polymorphic associations mặc dù không phải là 
+giải pháp duy nhất cho quan hệ mô hình tree-like nhưng cả hai đều có ưu nhược
+điểm riêng. Cả hai ví dụ Vehicle và Postable đều có thể triển khai được bằng
+cả 2 phương pháp. Tuy nhiên có một vài lý do để phân biệt phương thức nào tốt
+nhất trong tình huống nào.
+
+1. Database structure: STI chỉ sử dụng một bảng cho tất cả các lớp trong mối quan 
+hệ, trong khi liên kết đa hình (polymorphic associations) sử dụng một bảng cho 
+mỗi lớp.
+
+2. Shared data or state: STI là một lựa chọn tuyệt vời nếu các mô hình của bạn 
+có nhiều thuộc tính được chia sẻ. Nếu không, liên kết đa hình
+(polymorphic associations) có lẽ là sự lựa chọn tốt hơn.
+
+3. Future concerns: Xem xét cách ứng dụng của bạn có thể thay đổi và phát triển.
+Nếu bạn đang xem xét STI nhưng nghĩ rằng bạn sẽ thêm các mô hình hoặc trường 
+mô hình khác với cấu trúc được chia sẻ, bạn có thể muốn suy nghĩ lại kế hoạch
+của mình. Nếu bạn cho rằng cấu trúc của mình có khả năng được giữ nguyên,
+STI nói chung sẽ nhanh hơn để truy vấn.
+
+4. Data integrity: Nếu một ứng dụng sử dụng cơ sở dữ liệu của bạn, liên kết đa
+hình có lẽ là một lựa chọn tồi tệ vì dữ liệu của bạn sẽ bị xâm phạm.
