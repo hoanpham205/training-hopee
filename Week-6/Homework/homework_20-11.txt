@@ -1,0 +1,55 @@
+Active Record Transactions:
+
+  Transaction giúp toàn vẹn dữ liệu, các thay đổi trong cơ sở dữ liệu chỉ được giữ lại khi tất cả các câu lệnh SQL trong transaction đều được thực hiện thành công. Vậy nên ta sẽ dùng transaction khi có 1 số thao tác với cơ sở dữ liệu mà yêu cầu tất cả các thao tác đó đều phải được thực hiện thành công.
+
+ex:
+	Account.transaction do
+ 	 a.dec 1000
+ 	 b.inc 1000
+  	 Invoice.create! from: a, to: b, amount: 1000
+	end
+
+Nếu save hoặc destroy thất bại do validation, hay có Exception được raise trong các callback (kể cả after _ save và after _ destroy) các thay đổi với database sẽ bị huỷ bỏ.
+
+ex: 	
+	user = User.new name: "My Name", email: "MyEmail@gmail.com", password: "123456",
+	  password_confirmation: "1234567"
+
+Khi thực hiện lệnh user.save, sẽ có lỗi xảy ra do password và password_confirmation không trùng khớp. Thao tác lưu sẽ bị huỷ bỏ.
+
+
+	user = User.new name: "My Name", email: "MyEmail@gmail.com", password: "123456",
+	  password_confirmation: "123456"
+
+Transaction lồng nhau:
+
+ex:	
+	User.transaction do
+  	  User.create username: "Nga"
+  	  User.transaction(requires_new: true) do
+    	    User.create username: "Nam"
+    	    raise ActiveRecord::Rollback
+  	  end
+	end
+
+Callbacks:
+  
+  Có 2 loại callback được gắn với transaction khi commit và rollback, đó là: after_commit va after_rollback.
+
+  -  after_commit sẽ được gọi mỗi khi có bản ghi bên trong transaction được lưu lại hoặc xoá khỏi CSDL khi transaction được commit.
+
+  -  after_rollback sẽ được gọi mỗi khi có bản ghi bên trong transaction được lưu lại hoặc xoá khỏi CSDL khi transaction được rollback.
+
+
+Methods:
+
+A
+  after_commit, after_create_commit, after_destroy_commit, after_rollback, after_save_commit, after_update_commit
+T
+  transaction
+
+
+
+
+
+
