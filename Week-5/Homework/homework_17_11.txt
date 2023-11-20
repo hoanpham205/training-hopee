@@ -1,0 +1,24 @@
+find: sẽ bắn ra một Exception nếu không có bất kỳ một record nào được tìm thấy. Nó chính là nguyên nhân dẫn tới việc server sẽ bị "crash". Và thật là khó chịu với người dùng khi web bị crash mà không hiểu chuyện gì đang xảy ra.
+
+find__by: thì không như vậy, nó không bắn ra Exception, đơn giản là nó trả về return value là "nil" và server sẽ không bị gián đoạn nếu không có record nào có giá trị phù hợp được tìm thấy.
+
+find_by!: Tương tự như find_by, nhưng nếu không tìm thấy bản ghi, nó sẽ ném một ngoại lệ 'ActiveRecord::RecordNotFound' thay vì trả về nil. Nó hữu ích khi bạn muốn đảm bảo rằng một bản ghi phải tồn tại. 
+
+ex:
+ User.create name: 'THE USER' # creates a user with id = 1
+ User.find(1) # returns the user
+ User.find_by(id: 1) # returns the user
+
+ User.find(2) # raises an exception
+ User.find_by(id: 2) # returns nil
+
+
+ user = User.find_by!(email: 'Example@example.com') # Lấy user có email là 'john@example.com', nếu không tìm thấy sẽ ném ngoại lệ
+
+"query n + 1" đề cập đến tình trạng khi bạn thực hiện một truy vấn để lấy dữ liệu từ một bảng chính và sau đó thực hiện nhiều truy vấn riêng lẻ để lấy dữ liệu từ các bảng liên quan. Điều này có thể dẫn đến hiện tượng "n + 1 queries", khi có một truy vấn để lấy dữ liệu từ bảng chính và n truy vấn (n là số lượng bản ghi trong bảng chính) để lấy dữ liệu từ các bảng liên quan.
+
+ex:
+ posts = Post.all
+ posts.each do |post|
+   puts post.author.name
+ end
