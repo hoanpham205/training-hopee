@@ -1,0 +1,100 @@
+
+ENUM:
+
+- Declare an enum attribute where the values map to integers in the database,
+but can be queried by name.
+
+ex: 
+          class CreateHumen < ActiveRecord::Migration
+            def change
+              create_table :humen do |t|
+                t.string :name
+                t.integer :status, null: false, default: 0
+              end
+            end
+          end
+
+          irb(main):005:0> Human.new.dead?
+          => true
+          irb(main):006:0> Human.new.alive?
+          => false
+          irb(main):007:0> Human.new.status
+          => "dead"
+          irb(main):009:0> Human.new
+          => #<Human id: nil, name: nil, status: 0>
+
+
+
+
+Source: https://api.rubyonrails.org/v5.1/classes/ActiveRecord/Enum.html
+        https://viblo.asia/p/enum-trong-rails-con-dao-hai-luoi-nwmGyElDGoW
+
+
+nested_attributes:
+	Nested Attributes trong Rails là một tính năng cho phép bạn ghi dữ liệu cho 
+các mô hình liên quan thông qua một mô hình chính. Nó giúp bạn tự động xử lý 
+việc ghi và cập nhật dữ liệu cho các mô hình liên quan trong một mệnh đề. 
+Nested Attributes làm cho quá trình quản lý dữ liệu của các mô hình liên quan 
+trở nên thuận tiện hơn, đặc biệt là trong các tình huống khi bạn cần tạo hoặc 
+cập nhật nhiều bản ghi liên quan cùng một lúc.
+
+ex:
+					class Author < ApplicationRecord
+					  has_many :books
+					  accepts_nested_attributes_for :books
+					end
+
+					class Book < ApplicationRecord
+					  belongs_to :author
+					end
+
+					<%= form_for @author do |author_form| %>
+					  <%= author_form.text_field :name %>
+					  
+					  <%= author_form.fields_for :books do |book_fields| %>
+					    <%= book_fields.text_field :title %>
+					    <%= book_fields.text_field :genre %>
+					  <% end %>
+
+					  <%= author_form.submit %>
+					<% end %>
+
+					class AuthorsController < ApplicationController
+					  def new
+					    @author = Author.new
+					    @book = author.books.build
+					  end
+
+					  def create
+					    author = Author.new(author_params)
+					    if author.save
+					      redirect_to author_path(author)
+					    else
+					      render :new
+					    end
+					  end
+
+					  private
+
+					  def author_params
+					    params.require(:author).permit(:name, books_attributes: [:title, :genre])
+					  end
+					end
+
+Source: https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html
+
+
+ActiveRecord::CounterCache::ClassMethods:
+
+Methods:
+  decrement_counter(counter_name, id, by: 1, touch: nil)
+
+  increment_counter(counter_name, id, by: 1, touch: nil)
+
+  reset_counters(id, *counters, touch: nil)
+
+  update_counters(id, counters)
+
+Source: https://api.rubyonrails.org/classes/ActiveRecord/CounterCache/ClassMethods.html
+
+
