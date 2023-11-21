@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class AuthorTest < ActiveSupport::TestCase
+class ArticleTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
