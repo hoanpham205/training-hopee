@@ -1,0 +1,45 @@
+<%= form_with(model: student)  do |form| %>
+
+  <% if @student.errors.any? %>
+    <% @student.errors.full_messages.each do |messages| %>
+      <p><%= messages %></p> 
+      <% end %>   
+  <% end %>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div> 
+  <br>
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div> 
+  <br>
+  <div>
+    <%= form.radio_button :gender, "male" %>
+    <%= label_tag(:gender_male,   "Male") %>
+    <%= form.radio_button :gender, "female" %>
+    <%= label_tag(:gender_female, "Female") %>
+  </div>
+  <br>
+  <div>
+    <%= form.label :date %>
+    <%= form.date_field :date %>
+  </div>
+  <br>
+  <div>
+    <%= form.label :address %>
+    <%= form.text_field :address %>
+  </div>
+  <br>
+  <div>
+    <%= form.label :date %>
+    <%= form.telephone_field :phone %>
+  </div> 
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>
