@@ -1,6 +1,6 @@
+# frozen_string_literal: true
+
 class StudentsController < ApplicationController
-
-
   def index
     @students = Student.all
   end
@@ -8,10 +8,8 @@ class StudentsController < ApplicationController
   def new
     @student = Student.new
   end
-  
-  def edit
-   
-  end
+
+  def edit; end
 
   def update
     respond_to do |format|
@@ -24,29 +22,28 @@ class StudentsController < ApplicationController
       end
     end
   end
-  
 
   def create
     @student = Student.new(student_params)
 
     respond_to do |format|
       if @student.save
-        format.html {redirect_to student_path(@student), notice: 'Student was successfully created'}
-        format.json {render :show, status: :created, location: @student}
+        format.html { redirect_to student_path(@student), notice: 'Student was successfully created' }
+        format.json { render :show, status: :created, location: @student }
       else
-        format.html { render :new, status: :unprocessable_entity}
-        format.json { render json: @student.errors, status: :unprocessable_entity}
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  def show; end 
+  def show; end
 
-  def detroy 
+  def detroy
     @student.destroy
     respond_to do |format|
-      format.html {redirect_to student_path, notice: 'Student was successfully deleted'}
-      format.json {head :no_content}
+      format.html { redirect_to student_path, notice: 'Student was successfully deleted' }
+      format.json { head :no_content }
     end
   end
 

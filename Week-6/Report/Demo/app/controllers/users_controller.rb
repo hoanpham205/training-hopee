@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  
   def index
     @users = User.all
   end
 
-  def new 
+  def new
     @user = User.new
   end
 
-  def show 
+  def show
     @user = User.find(params[:id])
   end
 
@@ -17,22 +18,22 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html {redirect_to @user, notice:'User was successfully created'  }
-        format.json {render json: @user, status: :created, location: @user}
+        format.html { redirect_to @user, notice: 'User was successfully created' }
+        format.json { render json: @user, status: :created, location: @user }
       else
-        format.html {render action: "new"}
-        format.json {render json: @user.errors, status: :unprocessable_entity}
+        format.html { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  def destroy 
+  def destroy
     @user = User.find(params[:id])
     @user.destroy
 
     respond_to do |format|
-      format.html {redirect_to users_path, notice:'User was successfully deleted' }
-      format.json {head :no_content}
+      format.html { redirect_to users_path, notice: 'User was successfully deleted' }
+      format.json { head :no_content }
     end
   end
 
@@ -42,4 +43,3 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email)
   end
 end
-
