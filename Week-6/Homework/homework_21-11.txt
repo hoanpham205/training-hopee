@@ -1,0 +1,47 @@
+ActiveRecord serialize:
+	một tính năng mà bạn có thể sử dụng để lưu trữ các 
+đối tượng phức tạp (ví dụ: mảng, hash, đối tượng) vào một cột trong cơ sở dữ 
+liệu. Khi bạn sử dụng serialize, ActiveRecord sẽ tự động chuyển đổi giữa dữ 
+liệu phức tạp và một dạng dữ liệu mà cơ sở dữ liệu có thể lưu trữ (thường là 
+dạng chuỗi).
+
+1. Khai báo:
+	class User < ActiveRecord::Base
+	  serialize :properties
+	end
+
+	==> irb(main):003:0> user.properties = {twitter_handle: "@BrianVanLoo", 	
+																					location: "CA"}
+			irb(main):004:0> user.save
+
+			---\n:twitter_handle: '@BrianVanLoo'\n:location: CA\n
+
+2. Lưu Hash vào cơ sở dữ liệu:
+ex:
+
+	class User < ActiveRecord::Base
+	  serialize :properties, JSON
+	end
+
+==> {"twitter_handle":"@BrianVanLoo","location":"CA"}
+
+ex:
+
+	class Product < ApplicationRecord
+	  serialize :details, Hash
+	end
+
+	==> product = Product.new
+			product.details = { color: 'red', size: 'medium' }
+			product.save
+
+	-- # SQL: SELECT details FROM products WHERE id = 1;
+		# Kết quả: "---\n:color: red\n:size: medium\n"
+		
+		product = Product.find(1)
+		puts product.details
+		# Kết quả: { "color" => "red", "size" => "medium" }
+
+
+
+
