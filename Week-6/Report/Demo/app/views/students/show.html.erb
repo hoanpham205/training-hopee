@@ -1,0 +1,19 @@
+<div class = 'col'>
+  <p><%= notice %></p>
+  <h1>Student Detail</h1>
+
+  <p><strong>Name: </strong><%= @student.name %></p>
+
+  <p><strong>Email: </strong><%= @student.email %></p>
+  <p><strong>Date of Birth: </strong><%= @student.date.strftime('%A, %b %d %Y') %></p>
+
+  <p><strong>Address: </strong><%= @student.address %></p>
+
+  <p><strong>Telephone: </strong><%= @student.phone %></p>
+
+  <%= link_to 'Back', students_path %> | <%= link_to 'Edit', edit_student_path(@student)%>
+
+</div>
+
+
+

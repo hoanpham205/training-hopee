@@ -37,7 +37,9 @@ class StudentsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    set_student
+  end
 
   def detroy
     @student.destroy

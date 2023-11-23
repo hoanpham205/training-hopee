@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root 'students#new'
+  root 'authors#index'
   resources :users
+  resources :authors
+  resources :books
   resources :students
 
   resources :clients
