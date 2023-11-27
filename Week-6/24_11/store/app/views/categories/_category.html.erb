@@ -1,0 +1,25 @@
+<div id="<%= dom_id category %>">
+
+
+  <table class='table'>
+    <thead>
+    <tr class='text-center'>
+      <th scope="col">ID</th>
+      <th scope="col" >Category Name</th>
+      <th scope="col">Show</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" class='text-center'><%= category.id%></th>
+      <td class='text-center'><%=link_to category.name, category_path(category)%></td>
+      <td class='text-center'><%= button_to "Show",category_path(category),method: :get, class:"btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
+      <td class='text-center'><%= button_to "Edit",edit_category_path(category),method: :get, class:"btn-primary border-0 rounded-pill shadow px-3 py-2" %></td>
+      <td class='text-center'><%= button_to "Delete",category_path(category),method: :delete, class:"btn-danger border-0 rounded-pill shadow px-3 py-2" %></td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+

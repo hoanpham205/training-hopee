@@ -1,5 +1,6 @@
 <div class="set-center flex-column" style = "height: auto;">
   <h1> Employees </h1>
+  
   <!--Error Message-->
   <% if flash[:errors] %>
     <% flash.each do |name,message| %>
@@ -8,10 +9,13 @@
   <% end %>
   <!-- Employee Table -->
   <div>
+
     <table class="table table-info table-striped">
       <ol class="fs-2">
         <thead class="table-secondary">
-          <td class="text-center"> Id </td>
+          <td class="text-center"><%= sort_link(@q, :id, 'ID', default_order: :desc) %>
+
+ </td>
           <td class="text-center"> Name </td>
           
           <td colspan=3 class="text-center"> Action </td>

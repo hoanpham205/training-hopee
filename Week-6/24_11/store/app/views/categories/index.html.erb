@@ -1,27 +1,16 @@
 <div class='container'>
-  <table class='table'>
-    <thead>
-    <tr class='text-center'>
-      <th scope="col">ID</th>
-      <th scope="col">Category Name</th>
-      <th scope="col">Show</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @categories.each do |e| %>
-    <tr>
-      <th scope="row" class='text-center'><%= e.id%></th>
-      <td class='text-center'><%=link_to e.name, category_path(e)%></td>
-      <td class='text-center'><%= button_to "Show",category_path(e),method: :get, class:"btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
-      <td class='text-center'><%= button_to "Edit",edit_category_path(e),method: :get, class:"btn-primary border-0 rounded-pill shadow px-3 py-2" %></td>
-      <td class='text-center'><%= button_to "Delete",category_path(e),method: :delete, class:"btn-danger border-0 rounded-pill shadow px-3 py-2" %></td>
-    </tr>
+    <%== pagy_nav(@pagy) %>
+    <%= turbo_frame_tag :categories do %>
+      <%= render @categories %>
     <% end %>
-  </tbody>
-  </table>
-  <div class="d-flex">
+    <%= turbo_stream.replace :pagination do %>
+      <% if @pagy.next.present? %>
+        <%= turbo_frame_tag :pagination,
+                    loading: :lazy,
+            src: categories_path(format: :turbo_stream, page: @pagy.next) %>
+      <% end %>
+    <% end %>
+    <div class="d-flex">
     <%= button_to "Add New Category", new_category_path, method: :get ,class:"btn-warning border-0 rounded-pill shadow p-3 m-3" %>
   </div>
 </div>

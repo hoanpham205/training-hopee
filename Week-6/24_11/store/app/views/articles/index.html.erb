@@ -1,0 +1,38 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class='container d-flex align-items-centejustify-content-center'>Arti
+cles</h1>
+<%= render 'articles/search_form'%>
+
+<%= search_form_for @q do |f| %>
+  <%= f.date_field :created_at_gteq %>
+  <%= f.date_field :created_at_lteq %>
+  <%= f.submit "Search" %>
+<% end %>
+
+    <%= turbo_frame_tag :articles do %>
+     <table class='table'>
+      <thead>
+        <tr class='text-center'>
+          <th scope="col"><%= sort_link(@q, :title,"Title",default_order: :asc)%></th>
+          <th scope="col" ><%= sort_link(@q, :body,"Body",default_order: :asc)%></th>
+          <th scope="col">Show</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <%= render @articles %>
+     </table>
+    <% end %>
+    <%= turbo_stream.replace :pagination do %>
+      <% if @pagy.next.present? %>
+        <%= turbo_frame_tag :pagination,
+                    loading: :lazy,
+            src: articles_path(format: :turbo_stream, page: @pagy.next) %>
+      <% end %>
+    <% end %>
+
+  <div class='container d-flex align-items-center justify-content-center'>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+<%= link_to "New article", new_article_path %>

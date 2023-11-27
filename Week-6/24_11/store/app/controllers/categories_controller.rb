@@ -4,7 +4,12 @@ class CategoriesController < ApplicationController
   before_action :set_category_params, only: %i[show edit update destroy]
 
   def index
-    @categories = Category.all
+    @pagy, @categories = pagy(Category.all, items: 5)
+    sleep(1)
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new
