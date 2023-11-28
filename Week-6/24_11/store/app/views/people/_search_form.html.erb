@@ -1,0 +1,9 @@
+<div class='text-end ' style='margin-right: 20px;'>
+
+<%= search_form_for @q do |f|%>
+  <%= f.search_field :full_name_cont%>
+  <%= f.submit 'Search', class: 'btn btn-dark' %>
+<% end %>
+
+
+</div>

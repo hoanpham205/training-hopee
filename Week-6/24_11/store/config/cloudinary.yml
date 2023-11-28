@@ -1,0 +1,11 @@
+development: 
+  cloud_name: "do6reumsj"
+  api_key: "436724359452659"
+  api_secret: "q7q3Ptjix3TJntv78Bgm3x5Jxew"
+  secure: true
+
+production:
+  cloud_name: "do6reumsj"
+  api_key: "436724359452659"
+  api_secret: "q7q3Ptjix3TJntv78Bgm3x5Jxew"
+  secure: true

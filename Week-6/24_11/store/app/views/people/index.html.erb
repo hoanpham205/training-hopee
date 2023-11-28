@@ -1,0 +1,39 @@
+<p style="color: black"><%= notice %></p>
+<div class='d-flex align-items-center '>
+  <h1 class="mb-0 mx-2">People</h1>
+  <%= link_to "New person", new_person_path, class: "btn btn-sm btn-dark mx-2" %>
+</div>
+
+<div class='container'>
+  <div class='row'>
+      <%= render 'people/search_form'%>
+    <div class='col-12 '>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Avatar</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Gender</th>
+            <th scope="col"><%= sort_link(@q, :age,"Age",default_order: :asc)%></th>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <%= render @people %>
+      </table>
+    </div>
+    <%= turbo_stream.replace :pagination do %>
+      <% if @pagy.next.present? %>
+        <%= turbo_frame_tag :pagination,
+                    loading: :lazy,
+            src: people_path(format: :turbo_stream, page: @pagy.next) %>
+      <% end %>
+    <% end %>
+
+  <div class='container d-flex align-items-right justify-content-right'>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+  </div> 
+</div>
+

@@ -66,6 +66,6 @@ class CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, products_attributes: %i[name price content])
+    params.require(:category).permit(:name, products_attributes: %i[name price images => []])
   end
 end

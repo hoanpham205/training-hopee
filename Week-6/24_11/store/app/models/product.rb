@@ -2,5 +2,5 @@
 
 class Product < ApplicationRecord
   belongs_to :category
-  has_rich_text :content
+  has_one_attached :images
 end

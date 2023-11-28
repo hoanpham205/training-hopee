@@ -11,17 +11,15 @@
     </tr>
   </thead>
   <tbody>
-    <% @categories.each do |category| %>
-      <% category.products.each do |product| %>
+      <% @products.each do |product| %>
       <tr>
         <th scope="row" class='text-center'><%=   product.id%></th>
-        <td class='text-center'><%=link_to product.name, category_path(category)%></td>
+        <td class='text-center'><%=link_to product.name, category_path(product)%></td>
         <td class='text-center'><%= image_tag(product.images, width: 100) if product.images.attached?  %></td>
-        <td class='text-center'><%= button_to "Show",category_path(category),method: :get, class:"btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
-        <td class='text-center'><%= button_to "Edit",edit_category_path(category),method: :get, class:"btn-primary border-0 rounded-pill shadow px-3 py-2" %></td>
-        <td class='text-center'><%= button_to "Delete",category_path(category),method: :delete, class:"btn-danger border-0 rounded-pill shadow px-3 py-2" %></td>
+        <td class='text-center'><%= button_to "Show",category_path(product),method: :get, class:"btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
+        <td class='text-center'><%= button_to "Edit",edit_category_path(product),method: :get, class:"btn-primary border-0 rounded-pill shadow px-3 py-2" %></td>
+        <td class='text-center'><%= button_to "Delete",category_path(product),method: :delete, class:"btn-danger border-0 rounded-pill shadow px-3 py-2" %></td>
       </tr>
-      <% end %>
     <% end %>
   </tbody>
   </table>
@@ -30,7 +28,7 @@
       <% if @pagy.next.present? %>
         <%= turbo_frame_tag :pagination,
                     loading: :lazy,
-            src: categories_path(format: :turbo_stream, page: @pagy.next) %>
+            src: products_path(format: :turbo_stream, page: @pagy.next) %>
       <% end %>
     <% end %>
     <div class="d-flex">
