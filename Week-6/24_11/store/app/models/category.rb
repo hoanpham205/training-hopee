@@ -2,6 +2,8 @@
 
 class Category < ApplicationRecord
   has_many :products
+
+  validates :name, presence: true
   accepts_nested_attributes_for :products,
                                 allow_destroy: true,
                                 reject_if: proc { |attribute| attribute['name'].blank? || attribute['price'].blank? }

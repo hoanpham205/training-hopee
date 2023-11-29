@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Person < ApplicationRecord
+  validates :full_name, :phone, :age, :email, presence: true
   enum gender: { male: 0, female: 1 }
   has_one_attached :avatar
   def self.ransackable_attributes(_auth_object = nil)
