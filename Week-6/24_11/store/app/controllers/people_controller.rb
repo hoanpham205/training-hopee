@@ -9,10 +9,10 @@ class PeopleController < ApplicationController
     @people = @q.result(distinct: true)
 
     @pagy, @people = pagy(@people, items: 5)
-    sleep(1)
+    # sleep(1)
     respond_to do |format|
       format.html
-      format.turbo_stream
+      format.json { head :no_content }
     end
   end
 
@@ -58,8 +58,10 @@ class PeopleController < ApplicationController
   # DELETE /people/1 or /people/1.json
   def destroy
     @person.destroy!
+    Rails.logger.debug 'vao day ne nha'
 
     respond_to do |format|
+      Rails.logger.debug 'vao day ne'
       format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
       format.json { head :no_content }
     end

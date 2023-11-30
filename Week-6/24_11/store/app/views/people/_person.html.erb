@@ -1,7 +1,6 @@
 
 <div id="<%= dom_id person %>">
   <div class='container'>
-      <tbody>
     <tr>
       <td><%= image_tag(person.avatar, width: 50) if person.avatar.attached?%></td>
       <td><%= person.full_name %></td>
@@ -10,7 +9,7 @@
       <td><%= person.gender%></td>
       <td><%= person.age%></td>
       <td><%= person.address%></td>
+      <td><%= link_to "Edit", edit_person_path(person), class: "btn btn-sm btn-dark mx-2" %></td>
     </tr>
-  </tbody>
   </div> 
 </div>

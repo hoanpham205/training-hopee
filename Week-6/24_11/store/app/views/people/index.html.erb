@@ -16,11 +16,14 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">Gender</th>
-            <th scope="col"><%= sort_link(@q, :age,"Age",default_order: :asc)%></th>
+            <th scope="col" ><%= sort_link(@q, :age,"Age",class: 'text-dark',default_order: :asc)%></th>
             <th scope="col">Address</th>
+            <th scope="col">Edit</th>
           </tr>
         </thead>
-        <%= render @people %>
+        <tbody>
+          <%= render @people %>
+        </tbody>
       </table>
     </div>
     <%= turbo_stream.replace :pagination do %>

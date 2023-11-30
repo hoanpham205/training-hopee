@@ -2,6 +2,8 @@
 
 class Person < ApplicationRecord
   validates :full_name, :phone, :age, :email, presence: true
+  validates :phone, numericality: { only_integer: true, message: 'Please enter only numbers' }
+
   enum gender: { male: 0, female: 1 }
   has_one_attached :avatar
   def self.ransackable_attributes(_auth_object = nil)

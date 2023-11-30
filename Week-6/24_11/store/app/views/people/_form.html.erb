@@ -13,11 +13,11 @@
 
   <div class='container'>
     <%= f.text_field :full_name, wrapper: { class: 'mb-3 has-warning' } %>
-
     <%= f.email_field :email %>
-         
     <div class="row">
-      <div class="col"><%= f.number_field :phone, wrapper: { class: 'mb-3 has-warning' } %></div>
+      <div class="col"><%= f.text_field :phone, wrapper: { class: 'mb-0 has-warning', pattern: '\d*'  } %>
+        <small class="text-muted ">Please enter only numbers.</small>
+      </div>
       <div class="col"><%= f.text_field :age, add_control_col_class: "additional-control-col-class" %></div>
       <div class='col d-flex align-items-center justify-content-center  ' >
         <%= f.label "Gender :" %> 
@@ -26,10 +26,22 @@
       </div>
     </div>
     <%= f.file_field :avatar %>
-
     <%= f.text_field :address, wrapper: { class: 'mb-3 has-warning' } %>
-
     <%= f.primary "Save" %>
-
   </div>
 <% end %>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('your-form-id');
+    var phoneInput = document.getElementById('phone-input');
+
+    form.addEventListener('submit', function(event) {
+      if (!/^\d+$/.test(phoneInput.value)) {
+        alert('Please enter only numbers in the phone field.');
+        event.preventDefault(); // Ngăn chặn form submit
+      }
+    });
+  });
+</script>
+
+  <%= button_to "Delete", person, method: :delete, class: "btn btn-sm btn-danger mx-2" %>

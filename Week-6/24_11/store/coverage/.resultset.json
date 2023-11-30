@@ -58,18 +58,104 @@
           null
         ]
       },
-      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/article.rb": {
+      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/controllers/people_controller.rb": {
         "lines": [
           null,
           null,
           1,
+          1,
+          null,
           null,
           1,
           1,
+          1,
           null,
           1,
           1,
+          1,
+          1,
+          1,
           null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/controllers/application_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/address.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
           null
         ]
       },
@@ -79,6 +165,20 @@
           null,
           1,
           1,
+          null
+        ]
+      },
+      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/article.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
           null
         ]
       },
@@ -99,6 +199,20 @@
           null
         ]
       },
+      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/employee.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          3,
+          null,
+          null
+        ]
+      },
       "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/person.rb": {
         "lines": [
           null,
@@ -114,6 +228,14 @@
           1,
           1,
           null,
+          null
+        ]
+      },
+      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/user.rb": {
+        "lines": [
+          null,
+          null,
+          1,
           null
         ]
       },
@@ -144,17 +266,6 @@
           null,
           null,
           0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/controllers/application_controller.rb": {
-        "lines": [
-          null,
-          null,
           0,
           0,
           0
@@ -390,91 +501,6 @@
         "branches": {
         }
       },
-      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/controllers/people_controller.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/controllers/products_controller.rb": {
         "lines": [
           null,
@@ -682,45 +708,8 @@
         ],
         "branches": {
         }
-      },
-      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/address.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/employee.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/home/hoan/workspace/training-hopee/Week-6/24_11/store/app/models/user.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
       }
     },
-    "timestamp": 1701250376
+    "timestamp": 1701315573
   }
 }
