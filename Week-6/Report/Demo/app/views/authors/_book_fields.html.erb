@@ -1,3 +1,8 @@
-<%= f.label :title %>
-<%= f.text_field :title, class:"form-control form-control-lg" %>
-     
+<div class="nested-fields">
+
+  <%= f.label :title %>
+  <%= f.text_field :title, class:"form-control form-control-lg" %>
+  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
+
+</div>
+      

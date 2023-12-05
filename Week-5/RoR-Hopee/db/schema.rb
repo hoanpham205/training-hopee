@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_17_020426) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_20_072530) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "street"
+    t.string "city"
+    t.integer "zipcode"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_addresses_on_client_id"
   end
 
   create_table "assemblies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -37,6 +47,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_020426) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "avatars", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "books", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.integer "year_published"
@@ -50,6 +65,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_020426) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["supplier_id"], name: "index_books_on_supplier_id"
+  end
+
+  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "coffees", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -74,6 +96,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_020426) do
     t.integer "visits"
     t.integer "orders_count"
     t.integer "lock_version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "members", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -151,4 +178,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_020426) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "addresses", "clients"
 end

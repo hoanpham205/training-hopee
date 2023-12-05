@@ -1,0 +1,12 @@
+<h1>Client#index</h1>
+
+<div id="clients">
+  <% @clients.each do |client| %>
+    <%= render  client %>
+    <p>
+      <%= link_to  "Show this client", client %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to  "New Client", new_client_path %>

@@ -22,6 +22,7 @@ RSpec.describe PeopleController, type: :controller do
           person: FactoryBot.attributes_for(:person)
         }
       end
+      
 
       it 'creates a new person' do
         expect do

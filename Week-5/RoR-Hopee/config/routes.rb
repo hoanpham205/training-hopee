@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root 'client/index'
   get 'books/index'
 
-  resources :books
+  resources :client
 end
