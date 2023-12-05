@@ -1,0 +1,65 @@
+position: relative;
+Khi một phần tử có position: relative;, nó sẽ được đặt dựa trên vị trí ban đầu của nó trong bố cục chuẩn. Bạn có thể di chuyển nó sử dụng các thuộc tính top, right, bottom, và left.
+
+Ví dụ:
+
+
+	<div class="relative-container">
+	  <div class="relative-child">Relative Child</div>
+	</div>
+
+	.relative-container {
+	  position: relative;
+	  width: 200px;
+	  height: 200px;
+	  background-color: lightblue;
+	}
+
+	.relative-child {
+	  position: relative;
+	  top: 20px;
+	  left: 30px;
+	  background-color: pink;
+	}
+
+
+position: absolute;
+Khi một phần tử có position: absolute;, nó sẽ được đặt dựa trên vị trí của phần tử cha mà có position khác static. Nếu không có phần tử cha nào có position khác static, nó sẽ được đặt dựa trên vị trí của phần tử <html>.
+
+Ví dụ:
+
+
+	<div class="absolute-container">
+	  <div class="absolute-child">Absolute Child</div>
+	</div>
+
+	.absolute-container {
+	  position: relative;
+	  width: 300px;
+	  height: 300px;
+	  background-color: lightgreen;
+	}
+
+	.absolute-child {
+	  position: absolute;
+	  top: 50px;
+	  left: 50px;
+	  background-color: lightcoral;
+	}
+	
+	
+position: fixed;
+Khi một phần tử có position: fixed;, nó sẽ được đặt cố định dựa trên cửa sổ trình duyệt. Ngay cả khi bạn cuộn trang web, phần tử này vẫn giữ nguyên vị trí của nó.
+
+Ví dụ:
+
+
+	<div class="fixed-element">Fixed Element</div>
+
+	.fixed-element {
+	  position: fixed;
+	  top: 10px;
+	  right: 10px;
+	  background-color: lightyellow;
+	}
+	
